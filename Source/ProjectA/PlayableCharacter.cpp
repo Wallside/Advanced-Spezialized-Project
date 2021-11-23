@@ -43,41 +43,25 @@ void APlayableCharacter::Collect()
 		Item* newItem = new Item(hitObject->objectName, hitObject->objectIcon);
 		inventory->AddItemToInventory(newItem);
 		hitObject->Collect();
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, inventory->inventoryList[2]->name);
-		if (inventory->inventoryList[2] != NULL)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Red, "Das ist der Fehler");
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Red, "Empty");
-		}
 	}	
 }
 
 FString APlayableCharacter::InventoryContent()
 {
 	
-	//FString content;
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	if (inventory->inventoryList[i] != NULL)
-	//	{
-	//		GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "Ich bin jetzt in der if");
-	//		GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Red, inventory->inventoryList[0]->name);
-	//		//return inventory->inventoryList[i]->name;
-	//		//content += (inventory->inventoryList[i]->name + ", ");
-	//	}
-	//	else
-	//	{
-	//		GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "Ich bin jetzt in der else");
-	//		GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Red, "Empty");
-	//		//content += "Empty, ";
-	//	}
-	//	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Blue, content);
-	//}
-	return inventory->inventoryList[0]->name;
-	//return content;	
+	FString content;
+	for (int i = 0; i < 5; i++)
+	{
+		if (inventory->inventoryList[i] != NULL)
+		{
+			content += (inventory->inventoryList[i]->name + ", ");
+		}
+		else
+		{
+			content += "Empty, ";
+		}
+	}
+	return content;	
 }
 
 FHitResult APlayableCharacter::ObjectToInteract()

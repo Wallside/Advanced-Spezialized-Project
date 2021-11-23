@@ -15,7 +15,7 @@ public:
 	Inventory();
 	~Inventory();
 
-	Item* inventoryList[5];
+	Item* inventoryList[5] = {NULL};
 
 
 	void AddItemToInventory(Item* item);
