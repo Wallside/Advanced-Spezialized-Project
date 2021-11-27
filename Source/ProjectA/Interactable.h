@@ -28,7 +28,7 @@ public:
 	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = "Interactable|Item")
 	FString objectName {"Name"};
 
-	UPROPERTY(EditAnywhere, Category = "Interacteable|Item")
+	UPROPERTY(EditAnywhere, Category = "Interactable|Item")
 	UTexture2D* objectIcon;
 
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
@@ -50,7 +50,7 @@ public:
 
 	void Collect();
 
-	void CompleteObject(APlayableCharacter* playerCharcter);
+	void CompleteObject(APlayableCharacter* playerCharacter);
 
 	void UnlockObjects();
 

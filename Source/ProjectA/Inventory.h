@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Item.h"
-#include "Interactable.h"
 
 /**
  * 
@@ -19,4 +18,6 @@ public:
 
 
 	void AddItemToInventory(Item* item);
+
+	void RemoveItemFromInventory(int index);
 };

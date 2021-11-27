@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "Inventory.h"
 #include "Item.h"
-#include "Interactable.h"
 #include "PlayableCharacter.generated.h"
 
 UCLASS()

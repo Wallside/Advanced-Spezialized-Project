@@ -30,7 +30,10 @@ void Inventory::AddItemToInventory(Item* item)
 		}			
 		inventorySlot++;
 	
-	}while (!isInventoryFull);
+	}while (!isInventoryFull);	
+}
 
-	
+void Inventory::RemoveItemFromInventory(int index)
+{
+	inventoryList[index] = NULL;
 }

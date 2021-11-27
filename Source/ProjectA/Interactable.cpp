@@ -35,6 +35,7 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 	{
 		if (playerCharacter->inventory->inventoryList[i] != NULL)
 		{
+		
 			if (playerCharacter->inventory->inventoryList[i]->name == itemNeededToComplete)
 			{
 				TArray<UActorComponent*> components;
@@ -44,20 +45,19 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 					UStaticMeshComponent* incompleteMesh = Cast<UStaticMeshComponent>(components[j]);
 					if (incompleteMesh)
 					{
-
+	
 						incompleteMesh->SetStaticMesh(completedMesh);
 						this->incomplete = false;
+						playerCharacter->inventory->RemoveItemFromInventory(i);
 					}
 				}
 				break;
 			}
 		}
-		else if (i = 4)
+		else if (i == 4)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Cyan, "Benötigtes Item nicht in Slot Inventar");
 		}
-	}
-	
-	
+	}	
 }
 

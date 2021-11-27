@@ -2,7 +2,7 @@
 
 
 #include "PlayableCharacter.h"
-
+#include "Interactable.h"
 // Sets default values
 APlayableCharacter::APlayableCharacter()
 {
@@ -48,7 +48,7 @@ void APlayableCharacter::Interact()
 		}
 		else if (hitObject->incomplete)
 		{			
-			//hitObject->CompleteObject(Cast<APlayableCharacter>(this));
+			hitObject->CompleteObject(this);
 		}
 		
 	}	
