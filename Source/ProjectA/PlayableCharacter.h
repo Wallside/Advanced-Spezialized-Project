@@ -22,10 +22,16 @@ public:
 	float interactRange{10};
 
 	UFUNCTION(BlueprintCallable, Category = "Interact")
-	void Collect();
+	void Interact();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	FString InventoryContent();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	FString GetItemNameInIndex(int index);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UTexture2D* GetItemIconInIndex(int index);
 
 
 protected:
@@ -42,6 +48,4 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	Inventory* inventory = new Inventory();
-
-
 };

@@ -13,7 +13,7 @@ Item::~Item()
 
 }
 
-Item::Item(FString itemName, UImage* itemImage)
+Item::Item(FString itemName, UTexture2D* itemImage)
 {
 	name = itemName;
 	image = itemImage;

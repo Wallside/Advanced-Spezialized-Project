@@ -25,7 +25,7 @@ void Inventory::AddItemToInventory(Item* item)
 		else if (inventoryList[inventorySlot] == NULL)
 		{
 			inventoryList[inventorySlot] = item;
-			GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, "Item hinzugefuegt");
+			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Green, "Item hinzugefuegt");
 			break;
 		}			
 		inventorySlot++;

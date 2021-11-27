@@ -32,17 +32,25 @@ void APlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 }
 
-void APlayableCharacter::Collect() 
+void APlayableCharacter::Interact() 
 {
 	FHitResult hit = ObjectToInteract();
 
 	AInteractable* hitObject = Cast<AInteractable>(hit.Actor);
 
-	if (hitObject && hitObject->collectable)
+	if (hitObject)
 	{
-		Item* newItem = new Item(hitObject->objectName, hitObject->objectIcon);
-		inventory->AddItemToInventory(newItem);
-		hitObject->Collect();
+		if (hitObject->collectable)
+		{
+			Item* newItem = new Item(hitObject->objectName, hitObject->objectIcon);
+			inventory->AddItemToInventory(newItem);
+			hitObject->Collect();
+		}
+		else if (hitObject->incomplete)
+		{			
+			//hitObject->CompleteObject(Cast<APlayableCharacter>(this));
+		}
+		
 	}	
 }
 
@@ -83,5 +91,30 @@ FHitResult APlayableCharacter::ObjectToInteract()
 	GetWorld()->LineTraceSingleByChannel(hit, playerLocation, endTrace, ECC_Visibility, traceParams);
 
 	return hit;
+}
+
+FString APlayableCharacter::GetItemNameInIndex(int index)
+{
+	if (inventory->inventoryList[index] != NULL)
+	{
+		return inventory->inventoryList[index]->name;
+	}
+	else
+	{
+		return "";
+	}
+	
+}
+
+UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
+{
+	if (inventory->inventoryList[index] != NULL)
+	{
+		return inventory->inventoryList[index]->image;
+	}
+	else
+	{
+		return NULL;
+	}
 }
 

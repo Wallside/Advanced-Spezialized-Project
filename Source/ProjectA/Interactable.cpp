@@ -29,3 +29,35 @@ void AInteractable::Collect()
 	OnCollected();
 }
 
+void AInteractable::CompleteObject(APlayableCharacter* playerCharacter) 
+{
+	for (int i = 0; i < 5; i++)
+	{
+		if (playerCharacter->inventory->inventoryList[i] != NULL)
+		{
+			if (playerCharacter->inventory->inventoryList[i]->name == itemNeededToComplete)
+			{
+				TArray<UActorComponent*> components;
+				this->GetComponents(components);
+				for (int j = 0; j < components.Num(); j++)
+				{
+					UStaticMeshComponent* incompleteMesh = Cast<UStaticMeshComponent>(components[j]);
+					if (incompleteMesh)
+					{
+
+						incompleteMesh->SetStaticMesh(completedMesh);
+						this->incomplete = false;
+					}
+				}
+				break;
+			}
+		}
+		else if (i = 4)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Cyan, "Benötigtes Item nicht in Slot Inventar");
+		}
+	}
+	
+	
+}
+

@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/Image.h"
 #include "GameFramework/Actor.h"
+#include "PlayableCharacter.h"
 #include "Interactable.generated.h"
 
 UCLASS()
@@ -17,20 +17,32 @@ public:
 	AInteractable();
 
 	UPROPERTY(EditAnywhere, Category = "Interactable")
-	bool collectable{true};
+	bool collectable{false};
 
-	UPROPERTY(EditAnywhere, Category = "Item")
+	UPROPERTY(EditAnywhere, Category = "Interactable")
+	bool incomplete{false};
+
+	UPROPERTY(EditAnywhere, Category = "Interactable")
+	bool locked{false};
+
+	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = "Interactable|Item")
 	FString objectName {"Name"};
 
-	//UPROPERTY(EditAnywhere, Category = "Item")
-	//UImage* objectIcon;
+	UPROPERTY(EditAnywhere, Category = "Interacteable|Item")
+	UTexture2D* objectIcon;
+
+	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
+	FString itemNeededToComplete;
+
+	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
+	UStaticMesh* completedMesh;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
 	void OnCollected();
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void BeginPlay() override;	
 
 public:	
 	// Called every frame
@@ -38,6 +50,8 @@ public:
 
 	void Collect();
 
-	UImage* objectIcon;
+	void CompleteObject(APlayableCharacter* playerCharcter);
+
+	void UnlockObjects();
 
 };

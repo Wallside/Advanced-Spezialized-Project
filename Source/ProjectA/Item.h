@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/Image.h"
+#include "Styling/SlateBrush.h"
 
 /**
  * 
@@ -15,8 +15,8 @@ public:
 	Item();	
 	~Item();
 
-	Item(FString itemName, UImage* itemImage);
+	Item(FString itemName, UTexture2D* itemImage);
 
 	FString name;
-	UImage* image;
+	UTexture2D* image;
 };
