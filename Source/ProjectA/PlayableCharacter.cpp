@@ -137,13 +137,13 @@ void APlayableCharacter::Defend()
 
 void APlayableCharacter::CheckForStorymode() 
 {
-	if (storymode)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Storymode gefunden");
-	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Storymode nicht gefunden");
-	}
+	//if (storymode != NULL)
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Storymode gefunden");
+	//}
+	//else
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Storymode nicht gefunden");
+	//}
 }
 

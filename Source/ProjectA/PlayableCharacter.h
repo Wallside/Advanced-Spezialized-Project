@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Inventory.h"
 #include "Item.h"
+#include "Story_GameMode.h"
 #include "PlayableCharacter.generated.h"
 
 UCLASS()
@@ -20,6 +21,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Interact")
 	float interactRange{10};
 
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Monster/Combat")
+	bool isProtected{false};
+
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
 
@@ -32,12 +36,23 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	UTexture2D* GetItemIconInIndex(int index);
 
+	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
+	void Defend();
+
+	UFUNCTION(BlueprintCallable, Category = "Test")
+	void CheckForStorymode();
+
 
 protected:
+
+	AStory_GameMode storymode;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	FHitResult ObjectToInteract();	
+
+	void SwitchProtectionState();
 
 public:	
 	// Called every frame
