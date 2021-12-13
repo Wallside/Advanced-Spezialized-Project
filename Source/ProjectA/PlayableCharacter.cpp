@@ -118,3 +118,32 @@ UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
 	}
 }
 
+void APlayableCharacter::SwitchProtectionState() 
+{
+	if (isProtected)
+	{
+		isProtected = false;
+	}
+	else
+	{
+		isProtected = true;
+	}
+}
+
+void APlayableCharacter::Defend()
+{
+
+}
+
+void APlayableCharacter::CheckForStorymode() 
+{
+	if (storymode)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Storymode gefunden");
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Storymode nicht gefunden");
+	}
+}
+

@@ -2,7 +2,6 @@
 
 
 #include "Inventory.h"
-#include <array>
 
 Inventory::Inventory()
 {
