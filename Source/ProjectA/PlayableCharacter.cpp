@@ -3,6 +3,7 @@
 
 #include "PlayableCharacter.h"
 #include "Interactable.h"
+#include "Kismet/GameplayStatics.h"
 // Sets default values
 APlayableCharacter::APlayableCharacter()
 {
@@ -15,7 +16,8 @@ APlayableCharacter::APlayableCharacter()
 void APlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	storymode = Cast<AStory_GameMode>(GetWorld()->GetAuthGameMode());
 }
 
 // Called every frame
@@ -118,32 +120,27 @@ UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
 	}
 }
 
-void APlayableCharacter::SwitchProtectionState() 
-{
-	if (isProtected)
-	{
-		isProtected = false;
-	}
-	else
-	{
-		isProtected = true;
-	}
-}
-
 void APlayableCharacter::Defend()
-{
-
+{	
+	StopTerrorRadius();
+	storymode->isMonsterActive = false;
+	storymode->isMonsterOnCooldown = true;
+	storymode->MonsterCooldownTimerTick();
 }
 
-void APlayableCharacter::CheckForStorymode() 
+void APlayableCharacter::TriggerTerrorRadius() 
 {
-	//if (storymode != NULL)
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Storymode gefunden");
-	//}
-	//else
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Storymode nicht gefunden");
-	//}
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Du bekommst eine Panikattacke");
+	playerCameraComponent->PostProcessSettings = terrorSettings;
+}
+
+void APlayableCharacter::SetPlayerCamera(UCameraComponent* camera) 
+{
+	playerCameraComponent = camera;
+}
+
+void APlayableCharacter::StopTerrorRadius() 
+{
+	playerCameraComponent->PostProcessSettings = normalSettings;
 }
 

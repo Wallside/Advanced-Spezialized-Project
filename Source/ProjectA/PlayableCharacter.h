@@ -7,6 +7,8 @@
 #include "Inventory.h"
 #include "Item.h"
 #include "Story_GameMode.h"
+#include "Camera/CameraComponent.h"
+#include "Engine/Scene.h"
 #include "PlayableCharacter.generated.h"
 
 UCLASS()
@@ -24,6 +26,12 @@ public:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Monster/Combat")
 	bool isProtected{false};
 
+	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
+	FPostProcessSettings normalSettings;
+
+	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
+	FPostProcessSettings terrorSettings;
+
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
 
@@ -39,20 +47,24 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
 	void Defend();
 
-	UFUNCTION(BlueprintCallable, Category = "Test")
-	void CheckForStorymode();
-
+	UFUNCTION(BlueprintCallable, Category = "Monster/Attack")
+	void SetPlayerCamera(UCameraComponent* camera);
 
 protected:
 
-	AStory_GameMode storymode;
+	AStory_GameMode* storymode;
+
+	UCameraComponent* playerCameraComponent;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	FHitResult ObjectToInteract();	
 
-	void SwitchProtectionState();
+	void StopTerrorRadius();
+	
+
+	
 
 public:	
 	// Called every frame
@@ -60,6 +72,8 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void TriggerTerrorRadius();
 
 	Inventory* inventory = new Inventory();
 };
