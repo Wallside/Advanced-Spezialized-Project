@@ -11,6 +11,14 @@
 #include "Engine/Scene.h"
 #include "PlayableCharacter.generated.h"
 
+struct PostProcessChangeValues 
+{
+	float chromaticAberrationIntensitiy;
+	float imageEffectsVignetteIntensity, imageEffectsGrainJitter, imageEffectsGrainIntensity;
+	float colorGradingGlobalSaturationR, colorGradingGlobalSaturationG, colorGradingGlobalSaturationB, colorGradingGlobalSaturationY;
+	float colorGradingGlobalOffsetR, colorGradingGlobalOffsetG, colorGradingGlobalOffsetB, colorGradingGlobalOffsetY;
+};
+
 UCLASS()
 class PROJECTA_API APlayableCharacter : public ACharacter
 {
@@ -27,10 +35,13 @@ public:
 	bool isProtected{false};
 
 	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
-	FPostProcessSettings normalSettings;
+	FPostProcessSettings normalSetting;
 
 	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
-	FPostProcessSettings terrorSettings;
+	FPostProcessSettings terrorSetting;
+
+	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
+	FPostProcessSettings activeSetting;
 
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
@@ -47,14 +58,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
 	void Defend();
 
-	UFUNCTION(BlueprintCallable, Category = "Monster/Attack")
+	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
 	void SetPlayerCamera(UCameraComponent* camera);
+
+	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
+	void ApplyPostProcessSettingChanges();
 
 protected:
 
 	AStory_GameMode* storymode;
 
 	UCameraComponent* playerCameraComponent;
+
+	PostProcessChangeValues changeValues;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -63,7 +79,7 @@ protected:
 
 	void StopTerrorRadius();
 	
-
+	void CalculatePostProcessSettingDifference();
 	
 
 public:	
