@@ -15,6 +15,8 @@ AInteractable::AInteractable()
 void AInteractable::BeginPlay()
 {
 	Super::BeginPlay();
+
+	storymode = Cast<AStory_GameMode>(GetWorld()->GetAuthGameMode());
 	
 }
 
@@ -48,6 +50,7 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 	
 						incompleteMesh->SetStaticMesh(completedMesh);
 						this->incomplete = false;
+						this->isInteractable = true;
 						playerCharacter->inventory->RemoveItemFromInventory(i);
 					}
 				}
@@ -59,5 +62,22 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Cyan, "Benötigtes Item nicht in Slot Inventar");
 		}
 	}	
+}
+
+void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
+{
+
+}
+
+void AInteractable::Interact(APlayableCharacter* playerCharacter)
+{
+	if (storymode->isMonsterActive)
+	{
+		playerCharacter->Defend();
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Ich kann hiermit Momentan nicht interagieren");
+	}
 }
 

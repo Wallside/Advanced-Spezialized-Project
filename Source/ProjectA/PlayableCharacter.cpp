@@ -56,7 +56,14 @@ void APlayableCharacter::Interact()
 		{			
 			hitObject->CompleteObject(this);
 		}
-		
+		else if (hitObject->locked)
+		{
+			hitObject->UnlockObject(this);
+		}
+		else 
+		{
+			hitObject->Interact(this);
+		}
 	}	
 }
 

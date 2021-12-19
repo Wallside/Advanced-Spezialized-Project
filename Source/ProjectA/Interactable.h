@@ -5,14 +5,15 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PlayableCharacter.h"
+#include "Story_GameMode.h"
 #include "Interactable.generated.h"
 
 UCLASS()
 class PROJECTA_API AInteractable : public AActor
 {
-	GENERATED_BODY()	
-	
-public:	
+	GENERATED_BODY()
+
+public:
 	// Sets default values for this actor's properties
 	AInteractable();
 
@@ -24,6 +25,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Interactable")
 	bool locked{false};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
+	bool isInteractable{false};
 
 	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = "Interactable|Item")
 	FString objectName {"Name"};
@@ -41,6 +45,9 @@ public:
 	void OnCollected();
 
 protected:
+
+	AStory_GameMode* storymode;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;	
 
@@ -52,6 +59,8 @@ public:
 
 	void CompleteObject(APlayableCharacter* playerCharacter);
 
-	void UnlockObjects();
+	void UnlockObject(APlayableCharacter* playerCharacter);
+
+	void Interact(APlayableCharacter* playerCharacter);
 
 };
