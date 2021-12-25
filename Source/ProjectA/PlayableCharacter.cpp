@@ -106,6 +106,23 @@ FHitResult APlayableCharacter::ObjectToInteract()
 	return hit;
 }
 
+void APlayableCharacter::ChangeCrosshair() 
+{
+	FHitResult hit = ObjectToInteract();
+	AInteractable* hitObject = Cast<AInteractable>(hit.Actor);
+
+	if (hitObject)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Interactive Crosshair");
+		activeCrosshair = interactiveCrosshair;
+	}
+	else
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Normal Crosshair");
+		activeCrosshair = normalCrosshair;
+	}
+}
+
 FString APlayableCharacter::GetItemNameInIndex(int index)
 {
 	if (inventory->inventoryList[index] != NULL)
@@ -116,7 +133,6 @@ FString APlayableCharacter::GetItemNameInIndex(int index)
 	{
 		return "";
 	}
-	
 }
 
 UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
@@ -141,7 +157,7 @@ void APlayableCharacter::Defend()
 
 void APlayableCharacter::TriggerTerrorRadius() 
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Du bekommst eine Panikattacke");
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Du bekommst eine Panikattacke");
 	CalculatePostProcessSettingDifference();
 }
 

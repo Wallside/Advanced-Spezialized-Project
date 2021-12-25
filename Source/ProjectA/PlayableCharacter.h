@@ -43,6 +43,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
 	FPostProcessSettings activeSetting;
 
+	UPROPERTY(EditAnywhere, Category = "User Interface")
+	UTexture2D* normalCrosshair;
+
+	UPROPERTY(EditAnywhere, Category = "User Interface")
+	UTexture2D* interactiveCrosshair;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "User Interface")
+	UTexture2D* activeCrosshair;
+
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
 
@@ -62,7 +71,10 @@ public:
 	void SetPlayerCamera(UCameraComponent* camera);
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
-	void ApplyPostProcessSettingChanges();
+	void ApplyPostProcessSettingChanges(); 
+	
+	UFUNCTION(BlueprintCallable, Category = "User Interface")
+	void ChangeCrosshair();
 
 protected:
 
@@ -80,6 +92,8 @@ protected:
 	void StopTerrorRadius();
 	
 	void CalculatePostProcessSettingDifference();
+
+	
 	
 
 public:	

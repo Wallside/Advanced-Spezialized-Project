@@ -20,7 +20,7 @@ float AStory_GameMode::ChanceForMonsterEncounter()
 
 void AStory_GameMode::MonsterAttack()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "Monster wuerde jetzt kommen");
+	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "Monster wuerde jetzt kommen");
 	isMonsterActive = true;
 	Cast<APlayableCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn())->TriggerTerrorRadius();
 }
