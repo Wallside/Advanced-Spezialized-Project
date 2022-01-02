@@ -59,7 +59,7 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 		}
 		else if (i == 4)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Cyan, "Benötigtes Item nicht in Slot Inventar");
+			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Cyan, "Benoetigtes Item nicht in Slot Inventar");
 		}
 	}	
 }
