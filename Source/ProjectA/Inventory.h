@@ -20,4 +20,8 @@ public:
 	void AddItemToInventory(Item* item);
 
 	void RemoveItemFromInventory(int index);
+
+private:
+
+	void SortInventory();
 };

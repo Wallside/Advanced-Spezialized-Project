@@ -35,4 +35,24 @@ void Inventory::AddItemToInventory(Item* item)
 void Inventory::RemoveItemFromInventory(int index)
 {
 	inventoryList[index] = NULL;
+	SortInventory();
+}
+
+void Inventory::SortInventory() 
+{
+	for (int i = 0; i < 5; i++)
+	{
+		if ((i + 1) >= 5)
+		{
+			break;
+		}
+		else
+		{
+			if (inventoryList[i] == NULL && inventoryList[i + 1] != NULL)
+			{
+				inventoryList[i] = inventoryList[i + 1];
+				inventoryList[i + 1] = NULL;
+			}
+		}
+	}
 }
