@@ -3,6 +3,7 @@
 
 #include "Story_GameMode.h"
 #include "PlayableCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 
 float AStory_GameMode::ChanceForMonsterEncounter()
@@ -20,8 +21,6 @@ float AStory_GameMode::ChanceForMonsterEncounter()
 
 void AStory_GameMode::MonsterAttack()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "Monster wuerde jetzt kommen");
-	isMonsterActive = true;
 	Cast<APlayableCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn())->TriggerTerrorRadius();
 }
 
@@ -32,6 +31,6 @@ void AStory_GameMode::MonsterCooldownTimerTick()
 
 void AStory_GameMode::GameOver() 
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, "You died");
+	UGameplayStatics::OpenLevel(GetWorld(), "MainMenu");
 }
 

@@ -17,9 +17,13 @@ void APlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	activeCrosshair = normalCrosshair;
+
 	storymode = Cast<AStory_GameMode>(GetWorld()->GetAuthGameMode());
 
 	playerCameraComponent->PostProcessSettings = activeSetting;
+
+	
 
 	
 }
@@ -152,13 +156,14 @@ void APlayableCharacter::Defend()
 	StopTerrorRadius();
 	storymode->isMonsterActive = false;
 	storymode->isMonsterOnCooldown = true;
+	storymode->monsterKillCountdown = 15;
 	storymode->MonsterCooldownTimerTick();
 }
 
 void APlayableCharacter::TriggerTerrorRadius() 
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Du bekommst eine Panikattacke");
-	CalculatePostProcessSettingDifference();
+	CalculatePostProcessSettingDifference(0);
+	storymode->isMonsterActive = true;
 }
 
 void APlayableCharacter::SetPlayerCamera(UCameraComponent* camera) 
@@ -168,47 +173,110 @@ void APlayableCharacter::SetPlayerCamera(UCameraComponent* camera)
 
 void APlayableCharacter::StopTerrorRadius() 
 {
-	activeSetting = normalSetting;
+	CalculatePostProcessSettingDifference(1);
+	isRecovering = true;
+	RecoveryTimerTick();
 }
 
-void APlayableCharacter::CalculatePostProcessSettingDifference() 
+void APlayableCharacter::CalculatePostProcessSettingDifference(int index) 
 {
-	changeValues.chromaticAberrationIntensitiy = (terrorSetting.SceneFringeIntensity - normalSetting.SceneFringeIntensity) / (storymode->monsterKillCountdown * 10);
+	if (index == 0)
+	{
+		changeValues.chromaticAberrationIntensitiy = (terrorSetting.SceneFringeIntensity - normalSetting.SceneFringeIntensity) / (storymode->monsterKillCountdown * 10);
 
-	changeValues.imageEffectsVignetteIntensity = (terrorSetting.VignetteIntensity - normalSetting.VignetteIntensity) / (storymode->monsterKillCountdown * 10);
-	changeValues.imageEffectsGrainJitter = (terrorSetting.GrainJitter - normalSetting.GrainJitter) / (storymode->monsterKillCountdown * 10);
-	changeValues.imageEffectsGrainIntensity = (terrorSetting.GrainIntensity - normalSetting.GrainIntensity) / (storymode->monsterKillCountdown * 10);
+		changeValues.imageEffectsVignetteIntensity = (terrorSetting.VignetteIntensity - normalSetting.VignetteIntensity) / (storymode->monsterKillCountdown * 10);
+		changeValues.imageEffectsGrainJitter = (terrorSetting.GrainJitter - normalSetting.GrainJitter) / (storymode->monsterKillCountdown * 10);
+		changeValues.imageEffectsGrainIntensity = (terrorSetting.GrainIntensity - normalSetting.GrainIntensity) / (storymode->monsterKillCountdown * 10);
 
-	changeValues.colorGradingGlobalSaturationR = (normalSetting.ColorSaturation.X - terrorSetting.ColorSaturation.X) / (storymode->monsterKillCountdown * 10);
-	changeValues.colorGradingGlobalSaturationG = (normalSetting.ColorSaturation.Y - terrorSetting.ColorSaturation.Y) / (storymode->monsterKillCountdown * 10);
-	changeValues.colorGradingGlobalSaturationB = (normalSetting.ColorSaturation.Z - terrorSetting.ColorSaturation.Z) / (storymode->monsterKillCountdown * 10);
-	changeValues.colorGradingGlobalSaturationY = (normalSetting.ColorSaturation.W - terrorSetting.ColorSaturation.W) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalSaturationR = (normalSetting.ColorSaturation.X - terrorSetting.ColorSaturation.X) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalSaturationG = (normalSetting.ColorSaturation.Y - terrorSetting.ColorSaturation.Y) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalSaturationB = (normalSetting.ColorSaturation.Z - terrorSetting.ColorSaturation.Z) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalSaturationY = (normalSetting.ColorSaturation.W - terrorSetting.ColorSaturation.W) / (storymode->monsterKillCountdown * 10);
 
-	changeValues.colorGradingGlobalOffsetR = (normalSetting.ColorOffset.X - terrorSetting.ColorOffset.X) / (storymode->monsterKillCountdown * 10);
-	changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - terrorSetting.ColorOffset.Y) / (storymode->monsterKillCountdown * 10);
-	changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - terrorSetting.ColorOffset.Z) / (storymode->monsterKillCountdown * 10);
-	changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - terrorSetting.ColorOffset.W) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalOffsetR = (normalSetting.ColorOffset.X - terrorSetting.ColorOffset.X) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - terrorSetting.ColorOffset.Y) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - terrorSetting.ColorOffset.Z) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - terrorSetting.ColorOffset.W) / (storymode->monsterKillCountdown * 10);
+	}
+	else if (index == 1)
+	{
+		changeValues.chromaticAberrationIntensitiy = (activeSetting.SceneFringeIntensity - normalSetting.SceneFringeIntensity) / (recoveryTime * 10);
+
+		changeValues.imageEffectsVignetteIntensity = (activeSetting.VignetteIntensity - normalSetting.VignetteIntensity) / (recoveryTime * 10);
+		changeValues.imageEffectsGrainJitter = (activeSetting.GrainJitter - normalSetting.GrainJitter) / (recoveryTime * 10);
+		changeValues.imageEffectsGrainIntensity = (activeSetting.GrainIntensity - normalSetting.GrainIntensity) / (recoveryTime * 10);
+
+		changeValues.colorGradingGlobalSaturationR = (normalSetting.ColorSaturation.X - activeSetting.ColorSaturation.X) / (recoveryTime * 10);
+		changeValues.colorGradingGlobalSaturationG = (normalSetting.ColorSaturation.Y - activeSetting.ColorSaturation.Y) / (recoveryTime * 10);
+		changeValues.colorGradingGlobalSaturationB = (normalSetting.ColorSaturation.Z - activeSetting.ColorSaturation.Z) / (recoveryTime * 10);
+		changeValues.colorGradingGlobalSaturationY = (normalSetting.ColorSaturation.W - activeSetting.ColorSaturation.W) / (recoveryTime * 10);
+
+		changeValues.colorGradingGlobalOffsetR = (normalSetting.ColorOffset.X - activeSetting.ColorOffset.X) / (recoveryTime * 10);
+		changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - activeSetting.ColorOffset.Y) / (recoveryTime * 10);
+		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - activeSetting.ColorOffset.Z) / (recoveryTime * 10);
+		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - activeSetting.ColorOffset.W) / (recoveryTime * 10);
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Index out of bounce");
+	}
+
+	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "Chromatic Aberration: " + FString::SanitizeFloat(changeValues.chromaticAberrationIntensitiy));
+	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "VignetteIntesity: " + FString::SanitizeFloat(changeValues.imageEffectsVignetteIntensity));
+	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "GrainJitter: " + FString::SanitizeFloat(changeValues.imageEffectsGrainJitter));
+	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "GrainIntesity: " + FString::SanitizeFloat(changeValues.imageEffectsGrainIntensity));
 
 }
 
-void APlayableCharacter::ApplyPostProcessSettingChanges() 
+void APlayableCharacter::ApplyPostProcessSettingChanges(int index) 
 {
-	activeSetting.SceneFringeIntensity += changeValues.chromaticAberrationIntensitiy;
-	
-	activeSetting.VignetteIntensity += changeValues.imageEffectsVignetteIntensity;
-	activeSetting.GrainJitter += changeValues.imageEffectsGrainJitter;
-	activeSetting.GrainIntensity += changeValues.imageEffectsGrainIntensity;
-	
-	activeSetting.ColorSaturation.X -= changeValues.colorGradingGlobalSaturationR;
-	activeSetting.ColorSaturation.Y -= changeValues.colorGradingGlobalSaturationG;
-	activeSetting.ColorSaturation.Z -= changeValues.colorGradingGlobalSaturationB;
-	activeSetting.ColorSaturation.W -= changeValues.colorGradingGlobalSaturationY;
-	
-	activeSetting.ColorOffset.X -= changeValues.colorGradingGlobalOffsetR;
-	activeSetting.ColorOffset.Y -= changeValues.colorGradingGlobalOffsetG;
-	activeSetting.ColorOffset.Z -= changeValues.colorGradingGlobalOffsetB;
-	activeSetting.ColorOffset.W -= changeValues.colorGradingGlobalOffsetY;
+	if (index == 0)
+	{
+		activeSetting.SceneFringeIntensity += changeValues.chromaticAberrationIntensitiy;
+
+		activeSetting.VignetteIntensity += changeValues.imageEffectsVignetteIntensity;
+		activeSetting.GrainJitter += changeValues.imageEffectsGrainJitter;
+		activeSetting.GrainIntensity += changeValues.imageEffectsGrainIntensity;
+
+		activeSetting.ColorSaturation.X -= changeValues.colorGradingGlobalSaturationR;
+		activeSetting.ColorSaturation.Y -= changeValues.colorGradingGlobalSaturationG;
+		activeSetting.ColorSaturation.Z -= changeValues.colorGradingGlobalSaturationB;
+		activeSetting.ColorSaturation.W -= changeValues.colorGradingGlobalSaturationY;
+
+		activeSetting.ColorOffset.X -= changeValues.colorGradingGlobalOffsetR;
+		activeSetting.ColorOffset.Y -= changeValues.colorGradingGlobalOffsetG;
+		activeSetting.ColorOffset.Z -= changeValues.colorGradingGlobalOffsetB;
+		activeSetting.ColorOffset.W -= changeValues.colorGradingGlobalOffsetY;
+	}
+	else if (index == 1)
+	{
+		activeSetting.SceneFringeIntensity -= changeValues.chromaticAberrationIntensitiy;
+
+		activeSetting.VignetteIntensity -= changeValues.imageEffectsVignetteIntensity;
+		activeSetting.GrainJitter -= changeValues.imageEffectsGrainJitter;
+		activeSetting.GrainIntensity -= changeValues.imageEffectsGrainIntensity;
+
+		activeSetting.ColorSaturation.X += changeValues.colorGradingGlobalSaturationR;
+		activeSetting.ColorSaturation.Y += changeValues.colorGradingGlobalSaturationG;
+		activeSetting.ColorSaturation.Z += changeValues.colorGradingGlobalSaturationB;
+		activeSetting.ColorSaturation.W += changeValues.colorGradingGlobalSaturationY;
+
+		activeSetting.ColorOffset.X += changeValues.colorGradingGlobalOffsetR;
+		activeSetting.ColorOffset.Y += changeValues.colorGradingGlobalOffsetG;
+		activeSetting.ColorOffset.Z += changeValues.colorGradingGlobalOffsetB;
+		activeSetting.ColorOffset.W += changeValues.colorGradingGlobalOffsetY;
+	}
 
 	playerCameraComponent->PostProcessSettings = activeSetting;
+}
+
+void APlayableCharacter::RecoveryTimerTick() 
+{
+	OnRecoveryTimerTick();
+}
+
+void APlayableCharacter::NormalizePostProcessingSettings() 
+{
+	activeSetting = normalSetting;
 }
 
