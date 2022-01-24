@@ -47,26 +47,22 @@ void APlayableCharacter::Interact()
 	FHitResult hit = ObjectToInteract();
 
 	AInteractable* hitObject = Cast<AInteractable>(hit.Actor);
+	UStaticMeshComponent* hitComponent = Cast<UStaticMeshComponent>(hit.GetComponent());
 
-	if (hitObject)
+	if (hitObject && !hitComponent->GetName().Contains("Static"))
 	{
-		if (hitObject->collectable)
-		{
-			Item* newItem = new Item(hitObject->objectName, hitObject->objectIcon);
-			inventory->AddItemToInventory(newItem);
-			hitObject->Collect();
-		}
-		else if (hitObject->incomplete)
+		if (hitObject->incomplete)
 		{			
 			hitObject->CompleteObject(this);
 		}
 		else if (hitObject->locked)
 		{
 			hitObject->UnlockObject(this);
+			hitObject->OpenAndClose();
 		}
 		else 
 		{
-			hitObject->Interact(this);
+			hitObject->Interact(this, hitComponent);
 		}
 	}	
 }
@@ -105,7 +101,7 @@ FHitResult APlayableCharacter::ObjectToInteract()
 
 	FCollisionQueryParams traceParams(SCENE_QUERY_STAT(ObjectToInteract), false, GetInstigator());
 	FHitResult hit(ForceInit);
-	GetWorld()->LineTraceSingleByChannel(hit, playerLocation, endTrace, ECC_Visibility, traceParams);
+	GetWorld()->LineTraceSingleByChannel(hit, playerLocation, endTrace, ECC_PhysicsBody, traceParams);
 
 	return hit;
 }
@@ -114,10 +110,11 @@ void APlayableCharacter::ChangeCrosshair()
 {
 	FHitResult hit = ObjectToInteract();
 	AInteractable* hitObject = Cast<AInteractable>(hit.Actor);
+	UStaticMeshComponent* hitComponent = Cast<UStaticMeshComponent>(hit.GetComponent());
 
-	if (hitObject)
+
+	if (hitObject && !hitComponent->GetName().Contains("Static"))
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Interactive Crosshair");
 		activeCrosshair = interactiveCrosshair;
 	}
 	else
@@ -153,11 +150,19 @@ UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
 
 void APlayableCharacter::Defend()
 {	
-	StopTerrorRadius();
-	storymode->isMonsterActive = false;
-	storymode->isMonsterOnCooldown = true;
-	storymode->monsterKillCountdown = 15;
-	storymode->MonsterCooldownTimerTick();
+	if (storymode->isMonsterActive)
+	{
+		StopTerrorRadius();
+		storymode->isMonsterActive = false;
+		storymode->isMonsterOnCooldown = true;
+		storymode->monsterKillCountdown = 15;
+		storymode->MonsterCooldownTimerTick();
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich das momentan nicht machen");
+	}
+	
 }
 
 void APlayableCharacter::TriggerTerrorRadius() 
