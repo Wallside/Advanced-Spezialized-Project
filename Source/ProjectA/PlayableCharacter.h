@@ -31,8 +31,11 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Interact")
 	float interactRange{10};
 
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Monster/Combat")
-	bool isProtected{false};
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Monster/Combat")
+	bool isRecovering{false};
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Monster/Combat")
+	int recoveryTime{5};
 
 	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
 	FPostProcessSettings normalSetting;
@@ -71,13 +74,22 @@ public:
 	void SetPlayerCamera(UCameraComponent* camera);
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
-	void ApplyPostProcessSettingChanges(); 
+	void ApplyPostProcessSettingChanges(int index); 
 	
 	UFUNCTION(BlueprintCallable, Category = "User Interface")
 	void ChangeCrosshair();
 
-protected:
+	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
+	void RecoveryTimerTick();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Monster/Combat")
+	void OnRecoveryTimerTick();
+
+	UFUNCTION(BlueprintCallable, Category = "Monster/Comabt")
+	void NormalizePostProcessingSettings();
+
+protected:	
+	
 	AStory_GameMode* storymode;
 
 	UCameraComponent* playerCameraComponent;
@@ -91,8 +103,7 @@ protected:
 
 	void StopTerrorRadius();
 	
-	void CalculatePostProcessSettingDifference();
-
+	void CalculatePostProcessSettingDifference(int index);
 	
 	
 
