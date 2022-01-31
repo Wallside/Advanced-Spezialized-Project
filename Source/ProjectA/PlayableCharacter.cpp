@@ -62,7 +62,7 @@ void APlayableCharacter::Interact()
 		}
 		else 
 		{
-			hitObject->Interact(this, hitComponent);
+			hitObject->Interact(this);
 		}
 	}	
 }

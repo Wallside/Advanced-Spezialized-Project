@@ -83,9 +83,8 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 	}
 }
 
-void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshComponent* component)
+void AInteractable::Interact(APlayableCharacter* playerCharacter)
 {
-	hitComponentName = component->GetName();
 	if (objectType == Collectable)
 	{
 		Item* newItem = new Item(objectName, objectIcon);

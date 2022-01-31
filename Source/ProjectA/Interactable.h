@@ -72,7 +72,7 @@ public:
 
 	void UnlockObject(APlayableCharacter* playerCharacter);
 
-	void Interact(APlayableCharacter* playerCharacter, UStaticMeshComponent* component);
+	void Interact(APlayableCharacter* playerCharacter);
 
 	
 
