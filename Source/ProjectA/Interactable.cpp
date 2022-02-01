@@ -50,34 +50,61 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 	
 						incompleteMesh->SetStaticMesh(completedMesh);
 						this->incomplete = false;
-						this->isInteractable = true;
 						playerCharacter->inventory->RemoveItemFromInventory(i);
 					}
 				}
+				OnObjectCompleted();
 				break;
 			}
 		}
 		else if (i == 4)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Cyan, "Benoetigtes Item nicht in Slot Inventar");
+			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Benoetigtes Item nicht in Slot Inventar");
 		}
 	}	
 }
 
 void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 {
-
+	for (int i = 0; i < 5; i++)
+	{
+		if (playerCharacter->inventory->inventoryList[i] != NULL)
+		{
+			if (playerCharacter->inventory->inventoryList[i]->name == itemNeededToComplete)
+			{
+				locked = false;
+				playerCharacter->inventory->RemoveItemFromInventory(i);
+				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Door Unlocked");
+				OnObjectUnlocked();
+				break;
+			}
+		}
+		else if (i == 4)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Benoetigtes Item nicht in Slot Inventar");
+		}
+	}
 }
 
-void AInteractable::Interact(APlayableCharacter* playerCharacter)
+void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshComponent* component)
 {
-	if (storymode->isMonsterActive)
+	hitComponentName = component->GetName();
+	if (objectType == Collectable)
+	{
+		Item* newItem = new Item(objectName, objectIcon);
+		playerCharacter->inventory->AddItemToInventory(newItem);
+		playerCharacter->CollectSound();
+		Collect();
+	}
+	else if (objectType == Defendable)
 	{
 		playerCharacter->Defend();
+		OnInteract();
 	}
-	else
+	else if (objectType == CanBeOpened)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Ich kann hiermit Momentan nicht interagieren");
-	}
+		OpenAndClose();
+		OnInteract();
+	}	
 }
 

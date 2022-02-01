@@ -8,6 +8,14 @@
 #include "Story_GameMode.h"
 #include "Interactable.generated.h"
 
+
+UENUM()
+enum ObjectType
+{
+	Collectable, Defendable, CanBeOpened
+};
+
+
 UCLASS()
 class PROJECTA_API AInteractable : public AActor
 {
@@ -17,22 +25,16 @@ public:
 	// Sets default values for this actor's properties
 	AInteractable();
 
-	UPROPERTY(EditAnywhere, Category = "Interactable")
-	bool collectable{false};
-
-	UPROPERTY(EditAnywhere, Category = "Interactable")
+	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	bool incomplete{false};
 
-	UPROPERTY(EditAnywhere, Category = "Interactable")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
 	bool locked{false};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
-	bool isInteractable{false};
-
-	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = "Interactable|Item")
+	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = "Interactable|ObjectInformation")
 	FString objectName {"Name"};
 
-	UPROPERTY(EditAnywhere, Category = "Interactable|Item")
+	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	UTexture2D* objectIcon;
 
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
@@ -41,8 +43,26 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	UStaticMesh* completedMesh;
 
+	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
+	TEnumAsByte<ObjectType> objectType;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
+	FString hitComponentName;
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
 	void OnCollected();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnObjectCompleted();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnObjectUnlocked();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnInteract();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
+	void OpenAndClose();
 
 protected:
 
@@ -61,6 +81,8 @@ public:
 
 	void UnlockObject(APlayableCharacter* playerCharacter);
 
-	void Interact(APlayableCharacter* playerCharacter);
+	void Interact(APlayableCharacter* playerCharacter, UStaticMeshComponent* component);
+
+	
 
 };
