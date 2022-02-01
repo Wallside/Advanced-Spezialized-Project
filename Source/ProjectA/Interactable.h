@@ -52,6 +52,15 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
 	void OnCollected();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnObjectCompleted();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnObjectUnlocked();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnInteract();
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
 	void OpenAndClose();
 

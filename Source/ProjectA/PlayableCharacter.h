@@ -37,6 +37,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Monster/Combat")
 	int recoveryTime{5};
 
+	UPROPERTY(BlueprintReadOnly, Category = "Audio/FMOD")
+	FString roomName;
+
 	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
 	FPostProcessSettings normalSetting;
 
@@ -88,6 +91,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Monster/Comabt")
 	void NormalizePostProcessingSettings();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void PlayCollectSound();
+
+	UFUNCTION(BlueprintCallable, Category = "Audio/FMOD")
+	void QueueRoomSound(FString enteredRoom);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void RefreshRoomSound();
+
 protected:	
 	
 	AStory_GameMode* storymode;
@@ -115,6 +127,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void TriggerTerrorRadius();
+
+	void CollectSound();
 
 	Inventory* inventory = new Inventory();
 };
