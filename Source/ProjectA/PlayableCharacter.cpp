@@ -62,7 +62,7 @@ void APlayableCharacter::Interact()
 		}
 		else 
 		{
-			hitObject->Interact(this);
+			hitObject->Interact(this, hitComponent);
 		}
 	}	
 }
@@ -283,5 +283,16 @@ void APlayableCharacter::RecoveryTimerTick()
 void APlayableCharacter::NormalizePostProcessingSettings() 
 {
 	activeSetting = normalSetting;
+}
+
+void APlayableCharacter::CollectSound() 
+{
+	PlayCollectSound();
+}
+
+void APlayableCharacter::QueueRoomSound(FString enteredRoom)
+{
+	roomName = enteredRoom;
+	RefreshRoomSound();
 }
 

@@ -53,6 +53,7 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 						playerCharacter->inventory->RemoveItemFromInventory(i);
 					}
 				}
+				OnObjectCompleted();
 				break;
 			}
 		}
@@ -72,9 +73,11 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 			if (playerCharacter->inventory->inventoryList[i]->name == itemNeededToComplete)
 			{
 				locked = false;
+				playerCharacter->inventory->RemoveItemFromInventory(i);
 				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Door Unlocked");
+				OnObjectUnlocked();
+				break;
 			}
-			break;
 		}
 		else if (i == 4)
 		{
@@ -83,21 +86,25 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 	}
 }
 
-void AInteractable::Interact(APlayableCharacter* playerCharacter)
+void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshComponent* component)
 {
+	hitComponentName = component->GetName();
 	if (objectType == Collectable)
 	{
 		Item* newItem = new Item(objectName, objectIcon);
 		playerCharacter->inventory->AddItemToInventory(newItem);
+		playerCharacter->CollectSound();
 		Collect();
 	}
 	else if (objectType == Defendable)
 	{
 		playerCharacter->Defend();
+		OnInteract();
 	}
 	else if (objectType == CanBeOpened)
 	{
 		OpenAndClose();
+		OnInteract();
 	}	
 }
 
