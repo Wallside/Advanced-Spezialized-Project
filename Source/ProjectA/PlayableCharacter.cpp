@@ -285,3 +285,14 @@ void APlayableCharacter::NormalizePostProcessingSettings()
 	activeSetting = normalSetting;
 }
 
+void APlayableCharacter::CollectSound() 
+{
+	PlayCollectSound();
+}
+
+void APlayableCharacter::QueueRoomSound(FString enteredRoom)
+{
+	roomName = enteredRoom;
+	RefreshRoomSound();
+}
+
