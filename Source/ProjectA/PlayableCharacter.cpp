@@ -160,7 +160,7 @@ void APlayableCharacter::Defend()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich das momentan nicht machen");
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich kann das momentan nicht machen");
 	}
 	
 }
