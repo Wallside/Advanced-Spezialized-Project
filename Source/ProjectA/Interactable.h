@@ -25,7 +25,7 @@ public:
 	// Sets default values for this actor's properties
 	AInteractable();
 
-	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
 	bool incomplete{false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
@@ -39,9 +39,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	FString itemNeededToComplete;
-
-	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
-	UStaticMesh* completedMesh;
 
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	TEnumAsByte<ObjectType> objectType;

@@ -40,19 +40,9 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 		
 			if (playerCharacter->inventory->inventoryList[i]->name == itemNeededToComplete)
 			{
-				TArray<UActorComponent*> components;
-				this->GetComponents(components);
-				for (int j = 0; j < components.Num(); j++)
-				{
-					UStaticMeshComponent* incompleteMesh = Cast<UStaticMeshComponent>(components[j]);
-					if (incompleteMesh)
-					{
-	
-						incompleteMesh->SetStaticMesh(completedMesh);
-						this->incomplete = false;
-						playerCharacter->inventory->RemoveItemFromInventory(i);
-					}
-				}
+				incomplete = false;
+				playerCharacter->inventory->RemoveItemFromInventory(i);				
+				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Item Completed");
 				OnObjectCompleted();
 				break;
 			}
