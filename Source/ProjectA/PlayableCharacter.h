@@ -58,6 +58,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "User Interface")
 	UTexture2D* activeCrosshair;
 
+	UPROPERTY(BlueprintReadOnly, Category = "User Interface")
+	UTexture2D* inspectedObject;
+
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
 
@@ -100,6 +103,11 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void RefreshRoomSound();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "User Interface")
+	void OnInspect();
+
+	
+
 protected:	
 	
 	AStory_GameMode* storymode;
@@ -129,6 +137,8 @@ public:
 	void TriggerTerrorRadius();
 
 	void CollectSound();
+
+	void SafeInspectableObject(UTexture2D* inspectableObject);
 
 	Inventory* inventory = new Inventory();
 };
