@@ -30,6 +30,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	int monsterCooldown{20};
+    
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Envelopment")
+    float windForce;
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Comabt")
 	float ChanceForMonsterEncounter();

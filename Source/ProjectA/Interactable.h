@@ -60,6 +60,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
 	void OpenAndClose();
+    
+    UFUNCTION(BlueprintImplementableEvent, Category = "Envelopment")
+    void ApplyWindForceChanges(float newWindForce);
 
 protected:
 
