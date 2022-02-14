@@ -96,5 +96,10 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 		OpenAndClose();
 		OnInteract();
 	}	
+	else if (objectType == Inspectable)
+	{
+		playerCharacter->SafeInspectableObject(objectIcon);
+		playerCharacter->OnInspect();
+	}
 }
 
