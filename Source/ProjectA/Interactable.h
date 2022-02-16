@@ -43,6 +43,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	TEnumAsByte<ObjectType> objectType;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Envelopment")
+	int objectID;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
 	FString hitComponentName;
 
