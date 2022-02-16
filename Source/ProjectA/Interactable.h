@@ -12,7 +12,7 @@
 UENUM()
 enum ObjectType
 {
-	Collectable, Defendable, CanBeOpened
+	Collectable, Defendable, CanBeOpened, Inspectable
 };
 
 
