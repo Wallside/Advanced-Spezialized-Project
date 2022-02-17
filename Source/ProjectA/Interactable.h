@@ -12,7 +12,7 @@
 UENUM()
 enum ObjectType
 {
-	Collectable, Defendable, CanBeOpened
+	Collectable, Defendable, CanBeOpened, Inspectable
 };
 
 
@@ -43,6 +43,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	TEnumAsByte<ObjectType> objectType;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Envelopment")
+	int objectID;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
 	FString hitComponentName;
 
@@ -60,6 +63,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
 	void OpenAndClose();
+    
+    UFUNCTION(BlueprintImplementableEvent, Category = "Envelopment")
+    void ApplyWindForceChanges(float newWindForce);
 
 protected:
 
