@@ -17,6 +17,9 @@ struct PostProcessChangeValues
 	float imageEffectsVignetteIntensity, imageEffectsGrainJitter, imageEffectsGrainIntensity;
 	float colorGradingGlobalSaturationR, colorGradingGlobalSaturationG, colorGradingGlobalSaturationB, colorGradingGlobalSaturationY;
 	float colorGradingGlobalOffsetR, colorGradingGlobalOffsetG, colorGradingGlobalOffsetB, colorGradingGlobalOffsetY;
+
+	//Fmod Variable
+	float monsterIntensity;
 };
 
 UCLASS()
@@ -60,6 +63,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "User Interface")
 	UTexture2D* inspectedObject;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Monster/Combat")
+	float monsterIntensity;
 
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
@@ -105,6 +111,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "User Interface")
 	void OnInspect();
+
+	UFUNCTION(BlueprintImplementablEvent, Category = "Audio/FMOD")
+	void PlayMonsterAttackAudio();
 
 	
 

@@ -202,6 +202,8 @@ void APlayableCharacter::CalculatePostProcessSettingDifference(int index)
 		changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - terrorSetting.ColorOffset.Y) / (storymode->monsterKillCountdown * 10);
 		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - terrorSetting.ColorOffset.Z) / (storymode->monsterKillCountdown * 10);
 		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - terrorSetting.ColorOffset.W) / (storymode->monsterKillCountdown * 10);
+
+		changeValues.monsterIntensity = 5 / (storymode->monsterKillCountdown * 10);
 	}
 	else if (index == 1)
 	{
@@ -220,6 +222,8 @@ void APlayableCharacter::CalculatePostProcessSettingDifference(int index)
 		changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - activeSetting.ColorOffset.Y) / (recoveryTime * 10);
 		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - activeSetting.ColorOffset.Z) / (recoveryTime * 10);
 		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - activeSetting.ColorOffset.W) / (recoveryTime * 10);
+
+		changeValues.monsterIntensity = 5 / (recoveryTime * 10);
 	}
 	else
 	{
@@ -252,6 +256,8 @@ void APlayableCharacter::ApplyPostProcessSettingChanges(int index)
 		activeSetting.ColorOffset.Y -= changeValues.colorGradingGlobalOffsetG;
 		activeSetting.ColorOffset.Z -= changeValues.colorGradingGlobalOffsetB;
 		activeSetting.ColorOffset.W -= changeValues.colorGradingGlobalOffsetY;
+
+		monsterIntensity += changeValues.monsterIntensity;
 	}
 	else if (index == 1)
 	{
@@ -270,6 +276,8 @@ void APlayableCharacter::ApplyPostProcessSettingChanges(int index)
 		activeSetting.ColorOffset.Y += changeValues.colorGradingGlobalOffsetG;
 		activeSetting.ColorOffset.Z += changeValues.colorGradingGlobalOffsetB;
 		activeSetting.ColorOffset.W += changeValues.colorGradingGlobalOffsetY;
+
+		monsterIntensity -= changeValues.monsterIntensity;
 	}
 
 	playerCameraComponent->PostProcessSettings = activeSetting;
@@ -283,6 +291,8 @@ void APlayableCharacter::RecoveryTimerTick()
 void APlayableCharacter::NormalizePostProcessingSettings() 
 {
 	activeSetting = normalSetting;
+
+	monsterIntensity = 0;
 }
 
 void APlayableCharacter::CollectSound() 
