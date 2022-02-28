@@ -296,3 +296,8 @@ void APlayableCharacter::QueueRoomSound(FString enteredRoom)
 	RefreshRoomSound();
 }
 
+void APlayableCharacter::SafeInspectableObject(UTexture2D* inspectableObject) 
+{
+	inspectedObject = inspectableObject;
+}
+
