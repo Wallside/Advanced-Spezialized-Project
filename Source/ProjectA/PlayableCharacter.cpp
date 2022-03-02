@@ -311,3 +311,8 @@ void APlayableCharacter::SafeInspectableObject(UTexture2D* inspectableObject)
 	inspectedObject = inspectableObject;
 }
 
+AStory_GameMode* APlayableCharacter::GetStoryMode()
+{
+	return storymode;
+}
+

@@ -112,8 +112,11 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "User Interface")
 	void OnInspect();
 
-	UFUNCTION(BlueprintImplementablEvent, Category = "Audio/FMOD")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void PlayMonsterAttackAudio();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnIncompleteObjectInteract(AInteractable* object);
 
 	
 
@@ -148,6 +151,8 @@ public:
 	void CollectSound();
 
 	void SafeInspectableObject(UTexture2D* inspectableObject);
+
+	AStory_GameMode* GetStoryMode();
 
 	Inventory* inventory = new Inventory();
 };

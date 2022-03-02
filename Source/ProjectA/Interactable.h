@@ -31,6 +31,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
 	bool locked{false};
 
+	UPROPERTY(BlueprintReadOnly, Category = "Interactable")
+	bool firstInteraction = true;
+
 	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = "Interactable|ObjectInformation")
 	FString objectName {"Name"};
 
@@ -54,7 +57,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void OnObjectCompleted();
-
+		
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void OnObjectUnlocked();
 
@@ -71,10 +74,15 @@ protected:
 
 	AStory_GameMode* storymode;
 
+	
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;	
-
 public:	
+
+	
+
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

@@ -49,7 +49,8 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 		}
 		else if (i == 4)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Benoetigtes Item nicht in Slot Inventar");
+			playerCharacter->OnIncompleteObjectInteract(this);
+			firstInteraction = false;
 		}
 	}	
 }
@@ -71,7 +72,8 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 		}
 		else if (i == 4)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Benoetigtes Item nicht in Slot Inventar");
+			playerCharacter->OnIncompleteObjectInteract(this);
+			firstInteraction = false;
 		}
 	}
 }
@@ -88,8 +90,11 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 	}
 	else if (objectType == Defendable)
 	{
-		playerCharacter->Defend();
-		OnInteract();
+		if (playerCharacter->GetStoryMode()->isMonsterActive)
+		{
+			playerCharacter->Defend();
+			OnInteract();
+		}
 	}
 	else if (objectType == CanBeOpened)
 	{
