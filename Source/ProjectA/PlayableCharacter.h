@@ -65,7 +65,16 @@ public:
 	UTexture2D* inspectedObject;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Monster/Combat")
-	float monsterIntensity;
+	float monsterIntensity = 0;
+
+	UPROPERTY(BlueprintReadOnly, Category = "FMOD/Variables")
+	FString tempo; 
+
+	UPROPERTY(BlueprintReadOnly, Category = "FMOD/Variables")
+	int raeumlichkeiten;
+
+	UPROPERTY(BlueprintReadOnly, Category = "FMOD/Variables")
+	FString boden;
 
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
@@ -81,6 +90,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
 	void Defend();
+
+	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
+	void InputDefend();
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
 	void SetPlayerCamera(UCameraComponent* camera);
@@ -116,7 +128,25 @@ public:
 	void PlayMonsterAttackAudio();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
-	void OnIncompleteObjectInteract(AInteractable* object);
+	void OnObjectFirstInteraction(AInteractable* object);
+
+	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
+	void TriggerTerrorRadius();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void ToggleMonsterSound();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void GetMonsterIntensity();
+
+	UFUNCTION(BlueprintCallable)
+	void ViewChanges();
+
+	UFUNCTION(BlueprintCallable, Category = "Audio/FMOD")
+	void TriggerAudioEvent(AInteractable* object);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void PlayAudioEvent(AInteractable* object);
 
 	
 
@@ -146,7 +176,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void TriggerTerrorRadius();
+	
 
 	void CollectSound();
 

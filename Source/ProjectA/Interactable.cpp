@@ -44,12 +44,13 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 				playerCharacter->inventory->RemoveItemFromInventory(i);				
 				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Item Completed");
 				OnObjectCompleted();
+				firstInteraction = false;
 				break;
 			}
 		}
 		else if (i == 4)
 		{
-			playerCharacter->OnIncompleteObjectInteract(this);
+			playerCharacter->OnObjectFirstInteraction(this);
 			firstInteraction = false;
 		}
 	}	
@@ -67,12 +68,13 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 				playerCharacter->inventory->RemoveItemFromInventory(i);
 				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Door Unlocked");
 				OnObjectUnlocked();
+				firstInteraction = false;
 				break;
 			}
 		}
 		else if (i == 4)
 		{
-			playerCharacter->OnIncompleteObjectInteract(this);
+			playerCharacter->OnObjectFirstInteraction(this);
 			firstInteraction = false;
 		}
 	}
@@ -81,6 +83,8 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshComponent* component)
 {
 	hitComponentName = component->GetName();
+	playerCharacter->OnObjectFirstInteraction(this);
+	firstInteraction = false;
 	if (objectType == Collectable)
 	{
 		Item* newItem = new Item(objectName, objectIcon);
@@ -106,5 +110,12 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 		playerCharacter->SafeInspectableObject(objectIcon);
 		playerCharacter->OnInspect();
 	}
+
+	
+}
+
+void AInteractable::TriggerAudioEvent()
+{
+	AudioEvent();
 }
 
