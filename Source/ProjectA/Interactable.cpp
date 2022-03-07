@@ -44,12 +44,14 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 				playerCharacter->inventory->RemoveItemFromInventory(i);				
 				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Item Completed");
 				OnObjectCompleted();
+				firstInteraction = false;
 				break;
 			}
 		}
 		else if (i == 4)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Benoetigtes Item nicht in Slot Inventar");
+			playerCharacter->OnObjectFirstInteraction(this);
+			firstInteraction = false;
 		}
 	}	
 }
@@ -66,12 +68,14 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 				playerCharacter->inventory->RemoveItemFromInventory(i);
 				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Door Unlocked");
 				OnObjectUnlocked();
+				firstInteraction = false;
 				break;
 			}
 		}
 		else if (i == 4)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, "Benoetigtes Item nicht in Slot Inventar");
+			playerCharacter->OnObjectFirstInteraction(this);
+			firstInteraction = false;
 		}
 	}
 }
@@ -79,6 +83,8 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshComponent* component)
 {
 	hitComponentName = component->GetName();
+	playerCharacter->OnObjectFirstInteraction(this);
+	firstInteraction = false;
 	if (objectType == Collectable)
 	{
 		Item* newItem = new Item(objectName, objectIcon);
@@ -88,8 +94,11 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 	}
 	else if (objectType == Defendable)
 	{
-		playerCharacter->Defend();
-		OnInteract();
+		if (playerCharacter->GetStoryMode()->isMonsterActive)
+		{
+			playerCharacter->Defend();
+			OnInteract();
+		}
 	}
 	else if (objectType == CanBeOpened)
 	{
@@ -101,5 +110,12 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 		playerCharacter->SafeInspectableObject(objectIcon);
 		playerCharacter->OnInspect();
 	}
+
+	
+}
+
+void AInteractable::TriggerAudioEvent()
+{
+	AudioEvent();
 }
 

@@ -31,8 +31,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
 	bool locked{false};
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
+	bool firstInteraction = true;
+
 	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = "Interactable|ObjectInformation")
 	FString objectName {"Name"};
+
+	UPROPERTY(BlueprintReadOnly, Category = "Interactable|Elevator")
+	int status;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Interactable|Elevator")
+	int position;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Audio/FMOD")
+	int songChoice;
 
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	UTexture2D* objectIcon;
@@ -49,12 +61,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
 	FString hitComponentName;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TArray<AInteractable*> refereance;
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
 	void OnCollected();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void OnObjectCompleted();
-
+		
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void OnObjectUnlocked();
 
@@ -67,14 +82,25 @@ public:
     UFUNCTION(BlueprintImplementableEvent, Category = "Envelopment")
     void ApplyWindForceChanges(float newWindForce);
 
+	UFUNCTION(BlueprintCallable, Category = "Audio/FMOD")
+	void TriggerAudioEvent();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void AudioEvent();
+
 protected:
 
 	AStory_GameMode* storymode;
 
+	
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;	
-
 public:	
+
+	
+
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
