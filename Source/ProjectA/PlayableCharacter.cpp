@@ -148,27 +148,73 @@ UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
 	}
 }
 
-void APlayableCharacter::Defend()
+void APlayableCharacter::InputDefend()
 {	
+	if (storymode->isMonsterActive)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			if (inventory->inventoryList[i] != NULL)
+			{
+
+				if (inventory->inventoryList[i]->name == "Tape Recorder")
+				{
+					for (int j = 0; j < 5;j++)
+					{
+						if (inventory->inventoryList[j] != NULL)
+						{
+							if (inventory->inventoryList[j]->name == "Tapes")
+							{
+								StopTerrorRadius();
+								storymode->isMonsterActive = false;
+								storymode->isMonsterOnCooldown = true;
+								storymode->monsterKillCountdown = 15;
+								storymode->MonsterCooldownTimerTick();
+								inventory->RemoveItemFromInventory(j);
+								break;
+							}
+						}
+						else if (i == 4)
+						{
+							GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich habe keine Kassetten im Inventar");
+						}
+					}
+					
+				}
+			}
+			else if (i == 4)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich habe kein nutzbares Item im Inventar");
+			}
+		}
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich kann das momentan nicht machen");
+	}	
+}
+
+void APlayableCharacter::Defend()
+{
 	if (storymode->isMonsterActive)
 	{
 		StopTerrorRadius();
 		storymode->isMonsterActive = false;
 		storymode->isMonsterOnCooldown = true;
 		storymode->monsterKillCountdown = 15;
-		storymode->MonsterCooldownTimerTick();
+		storymode->MonsterCooldownTimerTick();	
 	}
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich kann das momentan nicht machen");
 	}
-	
 }
 
 void APlayableCharacter::TriggerTerrorRadius() 
 {
 	CalculatePostProcessSettingDifference(0);
 	storymode->isMonsterActive = true;
+	ToggleMonsterSound();
 }
 
 void APlayableCharacter::SetPlayerCamera(UCameraComponent* camera) 
@@ -180,6 +226,7 @@ void APlayableCharacter::StopTerrorRadius()
 {
 	CalculatePostProcessSettingDifference(1);
 	isRecovering = true;
+	ToggleMonsterSound();
 	RecoveryTimerTick();
 }
 
@@ -202,6 +249,9 @@ void APlayableCharacter::CalculatePostProcessSettingDifference(int index)
 		changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - terrorSetting.ColorOffset.Y) / (storymode->monsterKillCountdown * 10);
 		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - terrorSetting.ColorOffset.Z) / (storymode->monsterKillCountdown * 10);
 		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - terrorSetting.ColorOffset.W) / (storymode->monsterKillCountdown * 10);
+
+		changeValues.monsterIntensity = 5.0f / (storymode->monsterKillCountdown * 10);
+		
 	}
 	else if (index == 1)
 	{
@@ -220,12 +270,15 @@ void APlayableCharacter::CalculatePostProcessSettingDifference(int index)
 		changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - activeSetting.ColorOffset.Y) / (recoveryTime * 10);
 		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - activeSetting.ColorOffset.Z) / (recoveryTime * 10);
 		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - activeSetting.ColorOffset.W) / (recoveryTime * 10);
+
+		changeValues.monsterIntensity = 5.0f / (recoveryTime * 10);
 	}
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Index out of bounce");
 	}
 
+	//GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Yellow, "Monster Intensity: " + FString::SanitizeFloat(10 / storymode->monsterKillCountdown * 10));
 	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "Chromatic Aberration: " + FString::SanitizeFloat(changeValues.chromaticAberrationIntensitiy));
 	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "VignetteIntesity: " + FString::SanitizeFloat(changeValues.imageEffectsVignetteIntensity));
 	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "GrainJitter: " + FString::SanitizeFloat(changeValues.imageEffectsGrainJitter));
@@ -252,6 +305,10 @@ void APlayableCharacter::ApplyPostProcessSettingChanges(int index)
 		activeSetting.ColorOffset.Y -= changeValues.colorGradingGlobalOffsetG;
 		activeSetting.ColorOffset.Z -= changeValues.colorGradingGlobalOffsetB;
 		activeSetting.ColorOffset.W -= changeValues.colorGradingGlobalOffsetY;
+
+		monsterIntensity += changeValues.monsterIntensity;
+
+		GetMonsterIntensity();
 	}
 	else if (index == 1)
 	{
@@ -270,6 +327,8 @@ void APlayableCharacter::ApplyPostProcessSettingChanges(int index)
 		activeSetting.ColorOffset.Y += changeValues.colorGradingGlobalOffsetG;
 		activeSetting.ColorOffset.Z += changeValues.colorGradingGlobalOffsetB;
 		activeSetting.ColorOffset.W += changeValues.colorGradingGlobalOffsetY;
+
+		monsterIntensity -= changeValues.monsterIntensity;
 	}
 
 	playerCameraComponent->PostProcessSettings = activeSetting;
@@ -283,6 +342,10 @@ void APlayableCharacter::RecoveryTimerTick()
 void APlayableCharacter::NormalizePostProcessingSettings() 
 {
 	activeSetting = normalSetting;
+
+	playerCameraComponent->PostProcessSettings = activeSetting;
+
+	monsterIntensity = 0;
 }
 
 void APlayableCharacter::CollectSound() 
@@ -299,5 +362,24 @@ void APlayableCharacter::QueueRoomSound(FString enteredRoom)
 void APlayableCharacter::SafeInspectableObject(UTexture2D* inspectableObject) 
 {
 	inspectedObject = inspectableObject;
+}
+
+AStory_GameMode* APlayableCharacter::GetStoryMode()
+{
+	return storymode;
+}
+
+void APlayableCharacter::ViewChanges()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Yellow, "Monster Intensity: " + FString::SanitizeFloat(5.0f / storymode->monsterKillCountdown * 10));
+	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "Chromatic Aberration: " + FString::SanitizeFloat((terrorSetting.SceneFringeIntensity - normalSetting.SceneFringeIntensity) / (storymode->monsterKillCountdown * 10)));
+	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "VignetteIntesity: " + FString::SanitizeFloat(changeValues.imageEffectsVignetteIntensity));
+	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "GrainJitter: " + FString::SanitizeFloat(changeValues.imageEffectsGrainJitter));
+	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, "GrainIntesity: " + FString::SanitizeFloat(changeValues.imageEffectsGrainIntensity));
+}
+
+void APlayableCharacter::TriggerAudioEvent(AInteractable* object)
+{
+	PlayAudioEvent(object);
 }
 
