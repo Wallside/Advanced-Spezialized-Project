@@ -62,7 +62,7 @@ public:
 	UTexture2D* activeCrosshair;
 
 	UPROPERTY(BlueprintReadOnly, Category = "User Interface")
-	UTexture2D* inspectedObject;
+	AInteractable* inspectedObject;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Monster/Combat")
 	float monsterIntensity = 0;
@@ -180,7 +180,7 @@ public:
 
 	void CollectSound();
 
-	void SafeInspectableObject(UTexture2D* inspectableObject);
+	void SafeInspectableObject(AInteractable* inspectableObject);
 
 	AStory_GameMode* GetStoryMode();
 

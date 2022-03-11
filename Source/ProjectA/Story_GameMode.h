@@ -46,6 +46,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
 	void GameOver();
 
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
+	void ChangeLevel(FName newLevel);
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Monster/Combat")
 	void OnMonsterCooldownTimerTick();
 

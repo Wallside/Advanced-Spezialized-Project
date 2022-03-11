@@ -12,7 +12,7 @@
 UENUM()
 enum ObjectType
 {
-	Collectable, Defendable, CanBeOpened, Inspectable
+	Collectable, Defendable, CanBeOpened, Inspectable, None
 };
 
 
@@ -46,8 +46,14 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Audio/FMOD")
 	int songChoice;
 
-	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
 	UTexture2D* objectIcon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|Inspectable")
+	int imageWidth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|Inspectable")
+	int imageHeight;
 
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	FString itemNeededToComplete;
@@ -77,7 +83,7 @@ public:
 	void OnInteract();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
-	void OpenAndClose();
+	void OpenAndClose(UStaticMeshComponent* component);
     
     UFUNCTION(BlueprintImplementableEvent, Category = "Envelopment")
     void ApplyWindForceChanges(float newWindForce);
@@ -87,6 +93,27 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void AudioEvent();
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+	void Collect();
+
+	/*
+		0 = Drawer, 1 = Writing Desk, 2 = RezeptionX, 3 = RezeptionY
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+	void TriggerMoveObject(int index);
+
+	/*
+		0 = Drawer, 1 = Writing Desk, 2 = RezeptionX, 3 = RezeptionsY
+	*/
+	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
+	void MoveObject(int index);
+
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+	void TriggerClearAllReferences(AInteractable* itemToBeCleared);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
+	void ClearAllReferences(AInteractable* itemToBeCleared);
 
 protected:
 
@@ -103,8 +130,6 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	void Collect();
 
 	void CompleteObject(APlayableCharacter* playerCharacter);
 

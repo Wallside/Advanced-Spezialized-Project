@@ -102,12 +102,12 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 	}
 	else if (objectType == CanBeOpened)
 	{
-		OpenAndClose();
+		OpenAndClose(component);
 		OnInteract();
 	}	
 	else if (objectType == Inspectable)
 	{
-		playerCharacter->SafeInspectableObject(objectIcon);
+		playerCharacter->SafeInspectableObject(this);
 		playerCharacter->OnInspect();
 	}
 
@@ -119,3 +119,12 @@ void AInteractable::TriggerAudioEvent()
 	AudioEvent();
 }
 
+void AInteractable::TriggerMoveObject(int index)
+{
+	MoveObject(index);
+}
+
+void AInteractable::TriggerClearAllReferences(AInteractable* itemToBeCleared)
+{
+	ClearAllReferences(itemToBeCleared);
+}
