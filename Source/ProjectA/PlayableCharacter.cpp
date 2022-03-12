@@ -382,3 +382,15 @@ void APlayableCharacter::TriggerAudioEvent(AInteractable* object)
 	PlayAudioEvent(object);
 }
 
+void APlayableCharacter::TriggerPauseGame()
+{
+	PauseGame();
+	storymode->isGamePaused = true;
+}
+
+void APlayableCharacter::TriggerContinueGame()
+{
+	ContinueGame();
+	storymode->isGamePaused = false;
+}
+

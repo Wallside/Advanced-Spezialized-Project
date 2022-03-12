@@ -10,6 +10,7 @@
  */
 class PROJECTA_API Inventory
 {
+
 public:
 	Inventory();
 	~Inventory();
