@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 
 
+
 float AStory_GameMode::ChanceForMonsterEncounter()
 {
 	float randomNumber = FMath::RandRange(0, 1000);
@@ -37,5 +38,15 @@ void AStory_GameMode::GameOver()
 void AStory_GameMode::ChangeLevel(FName newLevel)
 {
 	UGameplayStatics::OpenLevel(GetWorld(), newLevel);
+}
+
+void AStory_GameMode::TriggerSaveGame()
+{
+	SaveGame();
+}
+
+void AStory_GameMode::TriggerLoadGame()
+{
+	LoadGame();
 }
 

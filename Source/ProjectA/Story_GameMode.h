@@ -25,6 +25,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	bool isMonsterOnCooldown{false};
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
+	bool isGamePaused = false;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	int monsterKillCountdown{15};
 
@@ -33,6 +36,15 @@ public:
     
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Envelopment")
     float windForce;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
+	float masterVolume{1};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
+	float musicVolume{1};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
+	float sfxVolume{1};
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Comabt")
 	float ChanceForMonsterEncounter();
@@ -50,7 +62,22 @@ public:
 	void ChangeLevel(FName newLevel);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Monster/Combat")
-	void OnMonsterCooldownTimerTick();
+	void OnMonsterCooldownTimerTick();	
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void PauseGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerSaveGame();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void SaveGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerLoadGame();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void LoadGame();
 
 private:
 
