@@ -58,7 +58,6 @@ void APlayableCharacter::Interact()
 		else if (hitObject->locked)
 		{
 			hitObject->UnlockObject(this);
-			hitObject->OpenAndClose();
 		}
 		else 
 		{
@@ -359,7 +358,7 @@ void APlayableCharacter::QueueRoomSound(FString enteredRoom)
 	RefreshRoomSound();
 }
 
-void APlayableCharacter::SafeInspectableObject(UTexture2D* inspectableObject) 
+void APlayableCharacter::SafeInspectableObject(AInteractable* inspectableObject) 
 {
 	inspectedObject = inspectableObject;
 }

@@ -34,3 +34,8 @@ void AStory_GameMode::GameOver()
 	UGameplayStatics::OpenLevel(GetWorld(), "MainMenu");
 }
 
+void AStory_GameMode::ChangeLevel(FName newLevel)
+{
+	UGameplayStatics::OpenLevel(GetWorld(), newLevel);
+}
+
