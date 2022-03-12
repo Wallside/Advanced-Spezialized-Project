@@ -55,6 +55,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|Inspectable")
 	int imageHeight;
 
+	UPROPERTY(EditAnywhere, BlueprintreadOnly, Category = "Interactable|Inspectable")
+	FText textOnObject;
+
 	UPROPERTY(EditAnywhere, Category = "Interactable|ObjectInformation")
 	FString itemNeededToComplete;
 
