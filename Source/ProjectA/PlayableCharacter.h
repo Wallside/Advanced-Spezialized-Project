@@ -76,6 +76,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "FMOD/Variables")
 	FString boden;
 
+	//UPROPERTY(EditAnywhere, Category = "User Interface")
+	//TScriptInterface<IInventory> inventory;
+
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
 
@@ -157,6 +160,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "System")
 	void PauseGame();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void ContinueGame();
+
 	
 
 protected:	
@@ -194,4 +200,6 @@ public:
 	AStory_GameMode* GetStoryMode();
 
 	Inventory* inventory = new Inventory();
+
+	
 };
