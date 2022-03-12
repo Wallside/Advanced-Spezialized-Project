@@ -390,7 +390,7 @@ void APlayableCharacter::TriggerPauseGame()
 
 void APlayableCharacter::TriggerContinueGame()
 {
-	PauseGame();
+	ContinueGame();
 	storymode->isGamePaused = false;
 }
 
