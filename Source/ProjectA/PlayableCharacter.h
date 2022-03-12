@@ -148,6 +148,15 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void PlayAudioEvent(AInteractable* object);
 
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerPauseGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerContinueGame();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void PauseGame();
+
 	
 
 protected:	
