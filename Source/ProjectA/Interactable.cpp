@@ -15,8 +15,6 @@ AInteractable::AInteractable()
 void AInteractable::BeginPlay()
 {
 	Super::BeginPlay();
-
-	storymode = Cast<AStory_GameMode>(GetWorld()->GetAuthGameMode());
 	
 }
 
