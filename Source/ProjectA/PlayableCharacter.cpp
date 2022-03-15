@@ -112,7 +112,7 @@ void APlayableCharacter::ChangeCrosshair()
 	UStaticMeshComponent* hitComponent = Cast<UStaticMeshComponent>(hit.GetComponent());
 
 
-	if (hitObject && !hitComponent->GetName().Contains("Static"))
+	if (hitObject && hitObject->objectType != ObjectType::None && !hitComponent->GetName().Contains("Static"))
 	{
 		activeCrosshair = interactiveCrosshair;
 	}
@@ -121,6 +121,11 @@ void APlayableCharacter::ChangeCrosshair()
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Normal Crosshair");
 		activeCrosshair = normalCrosshair;
 	}
+}
+
+void APlayableCharacter::SetItemNameInIndex(FString itemName, int index)
+{
+	inventory->inventoryList[index]->name = itemName;
 }
 
 FString APlayableCharacter::GetItemNameInIndex(int index)
@@ -134,6 +139,12 @@ FString APlayableCharacter::GetItemNameInIndex(int index)
 		return "";
 	}
 }
+
+void APlayableCharacter::SetItemIconInIndex(UTexture2D* itemIcon, int index)
+{
+	inventory->inventoryList[index]->image = itemIcon;
+}
+
 
 UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
 {
@@ -270,7 +281,7 @@ void APlayableCharacter::CalculatePostProcessSettingDifference(int index)
 		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - activeSetting.ColorOffset.Z) / (recoveryTime * 10);
 		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - activeSetting.ColorOffset.W) / (recoveryTime * 10);
 
-		changeValues.monsterIntensity = 5.0f / (recoveryTime * 10);
+		changeValues.monsterIntensity = 4.0f / (recoveryTime * 10);
 	}
 	else
 	{
@@ -344,7 +355,7 @@ void APlayableCharacter::NormalizePostProcessingSettings()
 
 	playerCameraComponent->PostProcessSettings = activeSetting;
 
-	monsterIntensity = 0;
+	monsterIntensity = 1;
 }
 
 void APlayableCharacter::CollectSound() 
@@ -392,5 +403,14 @@ void APlayableCharacter::TriggerContinueGame()
 {
 	ContinueGame();
 	storymode->isGamePaused = false;
+}
+
+void APlayableCharacter::CreateItemToAddToInventory(FString itemName, UTexture2D* itemIcon)
+{
+	if (itemName != "" && itemIcon != NULL)
+	{
+		Item* newItem = new Item(itemName, itemIcon);
+		inventory->AddItemToInventory(newItem);
+	}
 }
 
