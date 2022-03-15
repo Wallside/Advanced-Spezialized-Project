@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+//#include "Interactable.h"
 #include "Story_GameMode.generated.h"
 
 /**
@@ -81,6 +82,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "System")
 	void LoadGame();
+
+
 
 private:
 

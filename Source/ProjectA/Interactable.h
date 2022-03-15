@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PlayableCharacter.h"
-#include "Story_GameMode.h"
 #include "Interactable.generated.h"
 
 
@@ -126,7 +125,6 @@ public:
 
 protected:
 
-	AStory_GameMode* storymode;
 
 	
 
