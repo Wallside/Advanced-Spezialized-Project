@@ -65,7 +65,7 @@ public:
 	AInteractable* inspectedObject;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Monster/Combat")
-	float monsterIntensity = 0;
+	float monsterIntensity = 1;
 
 	UPROPERTY(BlueprintReadOnly, Category = "FMOD/Variables")
 	FString tempo; 
@@ -76,9 +76,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "FMOD/Variables")
 	FString boden;
 
-	//UPROPERTY(EditAnywhere, Category = "User Interface")
-	//TScriptInterface<IInventory> inventory;
-
 	UFUNCTION(BlueprintCallable, Category = "Interact")
 	void Interact();
 
@@ -86,7 +83,13 @@ public:
 	FString InventoryContent();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SetItemNameInIndex(FString itemName, int index);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	FString GetItemNameInIndex(int index);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SetItemIconInIndex(UTexture2D* itemIcon, int index);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	UTexture2D* GetItemIconInIndex(int index);
@@ -162,6 +165,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "System")
 	void ContinueGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void CreateItemToAddToInventory(FString itemName, UTexture2D* itemIcon);
+
 
 	
 
