@@ -128,3 +128,8 @@ void AInteractable::TriggerClearAllReferences(AInteractable* itemToBeCleared)
 {
 	ClearAllReferences(itemToBeCleared);
 }
+
+void AInteractable::TriggerInspectionComplete()
+{
+	InspectionComplete();
+}
