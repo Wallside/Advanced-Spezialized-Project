@@ -60,6 +60,9 @@ public:
 	void MonsterCooldownTimerTick();
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
+	void TriggerGameOver();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Monster/Combat")
 	void GameOver();
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
