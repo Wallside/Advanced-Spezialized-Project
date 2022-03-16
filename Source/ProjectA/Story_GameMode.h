@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+//#include "Interactable.h"
 #include "Story_GameMode.generated.h"
 
 /**
@@ -20,19 +21,34 @@ public:
 	float monsterSummonChance{0.5f};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
+	bool isMonsterDisabled{ false };
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	bool isMonsterActive{false};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	bool isMonsterOnCooldown{false};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
+	bool isGamePaused = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	int monsterKillCountdown{15};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	int monsterCooldown{20};
     
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Envelopment")
     float windForce;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "System")
+	float masterVolume{1};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "System")
+	float musicVolume{1};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "System")
+	float sfxVolume{1};
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Comabt")
 	float ChanceForMonsterEncounter();
@@ -44,10 +60,33 @@ public:
 	void MonsterCooldownTimerTick();
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
-	void GameOver();
+	void TriggerGameOver();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Monster/Combat")
-	void OnMonsterCooldownTimerTick();
+	void GameOver();
+
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
+	void ChangeLevel(FName newLevel);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Monster/Combat")
+	void OnMonsterCooldownTimerTick();	
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void PauseGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerSaveGame();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void SaveGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerLoadGame();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void LoadGame();
+
+
 
 private:
 

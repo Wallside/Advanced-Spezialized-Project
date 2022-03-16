@@ -62,10 +62,10 @@ public:
 	UTexture2D* activeCrosshair;
 
 	UPROPERTY(BlueprintReadOnly, Category = "User Interface")
-	UTexture2D* inspectedObject;
+	AInteractable* inspectedObject;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Monster/Combat")
-	float monsterIntensity = 0;
+	float monsterIntensity = 1;
 
 	UPROPERTY(BlueprintReadOnly, Category = "FMOD/Variables")
 	FString tempo; 
@@ -83,7 +83,13 @@ public:
 	FString InventoryContent();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SetItemNameInIndex(FString itemName, int index);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	FString GetItemNameInIndex(int index);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SetItemIconInIndex(UTexture2D* itemIcon, int index);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	UTexture2D* GetItemIconInIndex(int index);
@@ -148,6 +154,22 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void PlayAudioEvent(AInteractable* object);
 
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerPauseGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerContinueGame();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void PauseGame();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void ContinueGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void CreateItemToAddToInventory(FString itemName, UTexture2D* itemIcon);
+
+
 	
 
 protected:	
@@ -180,9 +202,11 @@ public:
 
 	void CollectSound();
 
-	void SafeInspectableObject(UTexture2D* inspectableObject);
+	void SafeInspectableObject(AInteractable* inspectableObject);
 
 	AStory_GameMode* GetStoryMode();
 
 	Inventory* inventory = new Inventory();
+
+	
 };
