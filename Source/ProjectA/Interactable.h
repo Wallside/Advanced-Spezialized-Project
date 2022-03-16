@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PlayableCharacter.h"
-#include "Story_GameMode.h"
 #include "Interactable.generated.h"
 
 
@@ -31,7 +30,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
 	bool locked{false};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interactable")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable")
 	bool firstInteraction = true;
 
 	UPROPERTY(EditAnywhere, BluePrintReadOnly, Category = "Interactable|ObjectInformation")
@@ -85,6 +84,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void OnInteract();
 
+	UFUNCTION(BlueprintCallable, Category = "Interactable")
+	void TriggerInspectionComplete();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void InspectionComplete();
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Interactable")
 	void OpenAndClose(UStaticMeshComponent* component);
     
@@ -120,7 +125,6 @@ public:
 
 protected:
 
-	AStory_GameMode* storymode;
 
 	
 

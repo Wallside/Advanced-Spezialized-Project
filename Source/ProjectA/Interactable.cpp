@@ -15,8 +15,6 @@ AInteractable::AInteractable()
 void AInteractable::BeginPlay()
 {
 	Super::BeginPlay();
-
-	storymode = Cast<AStory_GameMode>(GetWorld()->GetAuthGameMode());
 	
 }
 
@@ -127,4 +125,9 @@ void AInteractable::TriggerMoveObject(int index)
 void AInteractable::TriggerClearAllReferences(AInteractable* itemToBeCleared)
 {
 	ClearAllReferences(itemToBeCleared);
+}
+
+void AInteractable::TriggerInspectionComplete()
+{
+	InspectionComplete();
 }

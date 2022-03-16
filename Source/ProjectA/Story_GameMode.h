@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+//#include "Interactable.h"
 #include "Story_GameMode.generated.h"
 
 /**
@@ -20,6 +21,9 @@ public:
 	float monsterSummonChance{0.5f};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
+	bool isMonsterDisabled{ false };
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	bool isMonsterActive{false};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
@@ -28,22 +32,22 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
 	bool isGamePaused = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	int monsterKillCountdown{15};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	int monsterCooldown{20};
     
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Envelopment")
     float windForce;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "System")
 	float masterVolume{1};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "System")
 	float musicVolume{1};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "System")
 	float sfxVolume{1};
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Comabt")
@@ -56,6 +60,9 @@ public:
 	void MonsterCooldownTimerTick();
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Combat")
+	void TriggerGameOver();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Monster/Combat")
 	void GameOver();
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
@@ -78,6 +85,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "System")
 	void LoadGame();
+
+
 
 private:
 
