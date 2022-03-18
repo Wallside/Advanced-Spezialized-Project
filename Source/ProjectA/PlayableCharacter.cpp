@@ -57,7 +57,7 @@ void APlayableCharacter::Interact()
 		}
 		else if (hitObject->locked)
 		{
-			hitObject->UnlockObject(this);
+			hitObject->UnlockObject(this, hitComponent);
 		}
 		else 
 		{
@@ -411,6 +411,7 @@ void APlayableCharacter::CreateItemToAddToInventory(FString itemName, UTexture2D
 	{
 		Item* newItem = new Item(itemName, itemIcon);
 		inventory->AddItemToInventory(newItem);
+		GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Yellow, itemName);
 	}
 }
 
