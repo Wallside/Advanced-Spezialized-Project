@@ -54,7 +54,7 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 	}	
 }
 
-void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
+void AInteractable::UnlockObject(APlayableCharacter* playerCharacter, UStaticMeshComponent* component)
 {
 	for (int i = 0; i < 5; i++)
 	{
@@ -73,6 +73,7 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter)
 		else if (i == 4)
 		{
 			playerCharacter->OnObjectFirstInteraction(this);
+			OpenAndClose(component);
 			firstInteraction = false;
 		}
 	}
