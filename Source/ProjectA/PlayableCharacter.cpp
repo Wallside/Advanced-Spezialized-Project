@@ -118,7 +118,6 @@ void APlayableCharacter::ChangeCrosshair()
 	}
 	else
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Normal Crosshair");
 		activeCrosshair = normalCrosshair;
 	}
 }
@@ -132,10 +131,12 @@ FString APlayableCharacter::GetItemNameInIndex(int index)
 {
 	if (inventory->inventoryList[index] != NULL)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Name got");
 		return inventory->inventoryList[index]->name;
 	}
 	else
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Name NULL");
 		return "";
 	}
 }
@@ -150,10 +151,12 @@ UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
 {
 	if (inventory->inventoryList[index] != NULL)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Icon got");
 		return inventory->inventoryList[index]->image;
 	}
 	else
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Icon NULL");
 		return NULL;
 	}
 }
