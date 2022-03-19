@@ -131,12 +131,10 @@ FString APlayableCharacter::GetItemNameInIndex(int index)
 {
 	if (inventory->inventoryList[index] != NULL)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Name got");
 		return inventory->inventoryList[index]->name;
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Name NULL");
 		return "";
 	}
 }
@@ -151,12 +149,10 @@ UTexture2D* APlayableCharacter::GetItemIconInIndex(int index)
 {
 	if (inventory->inventoryList[index] != NULL)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Icon got");
 		return inventory->inventoryList[index]->image;
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Icon NULL");
 		return NULL;
 	}
 }
@@ -165,14 +161,14 @@ void APlayableCharacter::InputDefend()
 {	
 	if (storymode->isMonsterActive)
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			if (inventory->inventoryList[i] != NULL)
 			{
 
 				if (inventory->inventoryList[i]->name == "Tape Recorder")
 				{
-					for (int j = 0; j < 5;j++)
+					for (int j = 0; j < 7;j++)
 					{
 						if (inventory->inventoryList[j] != NULL)
 						{
@@ -187,7 +183,7 @@ void APlayableCharacter::InputDefend()
 								break;
 							}
 						}
-						else if (i == 4)
+						else if (i == 6)
 						{
 							GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich habe keine Kassetten im Inventar");
 						}
@@ -195,7 +191,7 @@ void APlayableCharacter::InputDefend()
 					
 				}
 			}
-			else if (i == 4)
+			else if (i == 6)
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "Ich habe kein nutzbares Item im Inventar");
 			}
