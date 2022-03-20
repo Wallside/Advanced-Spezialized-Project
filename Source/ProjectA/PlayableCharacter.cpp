@@ -358,11 +358,6 @@ void APlayableCharacter::NormalizePostProcessingSettings()
 	monsterIntensity = 1;
 }
 
-void APlayableCharacter::CollectSound() 
-{
-	PlayCollectSound();
-}
-
 void APlayableCharacter::QueueRoomSound(FString enteredRoom)
 {
 	roomName = enteredRoom;

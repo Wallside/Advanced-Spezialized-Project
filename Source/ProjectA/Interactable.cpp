@@ -88,7 +88,6 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 	{
 		Item* newItem = new Item(objectName, objectIcon);
 		playerCharacter->inventory->AddItemToInventory(newItem);
-		playerCharacter->CollectSound();
 		Collect();
 	}
 	else if (objectType == Defendable)
