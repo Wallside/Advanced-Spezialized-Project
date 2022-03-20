@@ -108,6 +108,7 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 	{
 		playerCharacter->SafeInspectableObject(this);
 		playerCharacter->OnInspect();
+		OnInspected();
 	}
 
 	

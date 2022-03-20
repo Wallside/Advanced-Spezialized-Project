@@ -180,6 +180,7 @@ void APlayableCharacter::InputDefend()
 								storymode->monsterKillCountdown = 15;
 								storymode->MonsterCooldownTimerTick();
 								inventory->RemoveItemFromInventory(j);
+								StartCassetteAudio();
 								break;
 							}
 						}
@@ -243,23 +244,23 @@ void APlayableCharacter::CalculatePostProcessSettingDifference(int index)
 {
 	if (index == 0)
 	{
-		changeValues.chromaticAberrationIntensitiy = (terrorSetting.SceneFringeIntensity - normalSetting.SceneFringeIntensity) / (storymode->monsterKillCountdown * 10);
+		changeValues.chromaticAberrationIntensitiy = (terrorSetting.SceneFringeIntensity - normalSetting.SceneFringeIntensity) / (storymode->monsterKillCountdown * 11);
 
-		changeValues.imageEffectsVignetteIntensity = (terrorSetting.VignetteIntensity - normalSetting.VignetteIntensity) / (storymode->monsterKillCountdown * 10);
-		changeValues.imageEffectsGrainJitter = (terrorSetting.GrainJitter - normalSetting.GrainJitter) / (storymode->monsterKillCountdown * 10);
-		changeValues.imageEffectsGrainIntensity = (terrorSetting.GrainIntensity - normalSetting.GrainIntensity) / (storymode->monsterKillCountdown * 10);
+		changeValues.imageEffectsVignetteIntensity = (terrorSetting.VignetteIntensity - normalSetting.VignetteIntensity) / (storymode->monsterKillCountdown * 11);
+		changeValues.imageEffectsGrainJitter = (terrorSetting.GrainJitter - normalSetting.GrainJitter) / (storymode->monsterKillCountdown * 11);
+		changeValues.imageEffectsGrainIntensity = (terrorSetting.GrainIntensity - normalSetting.GrainIntensity) / (storymode->monsterKillCountdown * 11);
 
-		changeValues.colorGradingGlobalSaturationR = (normalSetting.ColorSaturation.X - terrorSetting.ColorSaturation.X) / (storymode->monsterKillCountdown * 10);
-		changeValues.colorGradingGlobalSaturationG = (normalSetting.ColorSaturation.Y - terrorSetting.ColorSaturation.Y) / (storymode->monsterKillCountdown * 10);
-		changeValues.colorGradingGlobalSaturationB = (normalSetting.ColorSaturation.Z - terrorSetting.ColorSaturation.Z) / (storymode->monsterKillCountdown * 10);
-		changeValues.colorGradingGlobalSaturationY = (normalSetting.ColorSaturation.W - terrorSetting.ColorSaturation.W) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalSaturationR = (normalSetting.ColorSaturation.X - terrorSetting.ColorSaturation.X) / (storymode->monsterKillCountdown * 11);
+		changeValues.colorGradingGlobalSaturationG = (normalSetting.ColorSaturation.Y - terrorSetting.ColorSaturation.Y) / (storymode->monsterKillCountdown * 11);
+		changeValues.colorGradingGlobalSaturationB = (normalSetting.ColorSaturation.Z - terrorSetting.ColorSaturation.Z) / (storymode->monsterKillCountdown * 11);
+		changeValues.colorGradingGlobalSaturationY = (normalSetting.ColorSaturation.W - terrorSetting.ColorSaturation.W) / (storymode->monsterKillCountdown * 11);
 
-		changeValues.colorGradingGlobalOffsetR = (normalSetting.ColorOffset.X - terrorSetting.ColorOffset.X) / (storymode->monsterKillCountdown * 10);
-		changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - terrorSetting.ColorOffset.Y) / (storymode->monsterKillCountdown * 10);
-		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - terrorSetting.ColorOffset.Z) / (storymode->monsterKillCountdown * 10);
-		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - terrorSetting.ColorOffset.W) / (storymode->monsterKillCountdown * 10);
+		changeValues.colorGradingGlobalOffsetR = (normalSetting.ColorOffset.X - terrorSetting.ColorOffset.X) / (storymode->monsterKillCountdown * 11);
+		changeValues.colorGradingGlobalOffsetG = (normalSetting.ColorOffset.Y - terrorSetting.ColorOffset.Y) / (storymode->monsterKillCountdown * 11);
+		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - terrorSetting.ColorOffset.Z) / (storymode->monsterKillCountdown * 11);
+		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - terrorSetting.ColorOffset.W) / (storymode->monsterKillCountdown * 11);
 
-		changeValues.monsterIntensity = 5.0f / (storymode->monsterKillCountdown * 10);
+		changeValues.monsterIntensity = 5.0f / (storymode->monsterKillCountdown * 11);
 		
 	}
 	else if (index == 1)
@@ -280,7 +281,7 @@ void APlayableCharacter::CalculatePostProcessSettingDifference(int index)
 		changeValues.colorGradingGlobalOffsetB = (normalSetting.ColorOffset.Z - activeSetting.ColorOffset.Z) / (recoveryTime * 10);
 		changeValues.colorGradingGlobalOffsetY = (normalSetting.ColorOffset.W - activeSetting.ColorOffset.W) / (recoveryTime * 10);
 
-		changeValues.monsterIntensity = 4.0f / (recoveryTime * 10);
+		changeValues.monsterIntensity = 5.0f / (recoveryTime * 10);
 	}
 	else
 	{

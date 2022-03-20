@@ -105,6 +105,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 	void Collect();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnInspected();
+
 	/*
 		0 = Drawer, 1 = Writing Desk, 2 = RezeptionX, 3 = RezeptionY
 	*/
