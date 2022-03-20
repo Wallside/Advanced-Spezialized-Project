@@ -24,7 +24,7 @@ public:
 	// Sets default values for this actor's properties
 	AInteractable();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable|ObjectInformation")
 	bool incomplete{false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable|ObjectInformation")

@@ -118,9 +118,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Monster/Comabt")
 	void NormalizePostProcessingSettings();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
-	void PlayCollectSound();
-
 	UFUNCTION(BlueprintCallable, Category = "Audio/FMOD")
 	void QueueRoomSound(FString enteredRoom);
 
@@ -199,11 +196,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	
-
-	void CollectSound();
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;	
 
 	void SafeInspectableObject(AInteractable* inspectableObject);
 
