@@ -20,7 +20,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Monster/Combat")
 	float monsterSummonChance{0.5f};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
 	bool isMonsterDisabled{ false };
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Monster/Combat")
