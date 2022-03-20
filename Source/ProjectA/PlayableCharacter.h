@@ -166,6 +166,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "System")
 	void ContinueGame();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Monster/Combat")
+	void StartCassetteAudio();
+
 	UFUNCTION(BlueprintCallable, Category = "System")
 	void CreateItemToAddToInventory(FString itemName, UTexture2D* itemIcon);
 
