@@ -172,7 +172,7 @@ void APlayableCharacter::InputDefend()
 					{
 						if (inventory->inventoryList[j] != NULL)
 						{
-							if (inventory->inventoryList[j]->name == "Tapes")
+							if (inventory->inventoryList[j]->name.Contains("Tapes"))
 							{
 								StopTerrorRadius();
 								storymode->isMonsterActive = false;

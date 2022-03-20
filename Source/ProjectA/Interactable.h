@@ -27,7 +27,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
 	bool incomplete{false};
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable|ObjectInformation")
 	bool locked{false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable")
