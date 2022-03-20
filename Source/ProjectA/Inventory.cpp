@@ -17,7 +17,7 @@ void Inventory::AddItemToInventory(Item* item)
 	bool isInventoryFull{false};
 	do
 	{
-		if (inventorySlot >= 5)
+		if (inventorySlot >= 7)
 		{
 			isInventoryFull = true;
 		}
@@ -40,9 +40,9 @@ void Inventory::RemoveItemFromInventory(int index)
 
 void Inventory::SortInventory() 
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 7; i++)
 	{
-		if ((i + 1) >= 5)
+		if ((i + 1) >= 7)
 		{
 			break;
 		}

@@ -27,7 +27,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
 	bool incomplete{false};
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Interactable|ObjectInformation")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable|ObjectInformation")
 	bool locked{false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactable")
@@ -104,6 +104,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Interactable")
 	void Collect();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnInspected();
 
 	/*
 		0 = Drawer, 1 = Writing Desk, 2 = RezeptionX, 3 = RezeptionY

@@ -31,7 +31,7 @@ void AInteractable::Collect()
 
 void AInteractable::CompleteObject(APlayableCharacter* playerCharacter) 
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 7; i++)
 	{
 		if (playerCharacter->inventory->inventoryList[i] != NULL)
 		{
@@ -46,7 +46,7 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 				break;
 			}
 		}
-		else if (i == 4)
+		else if (i == 6)
 		{
 			playerCharacter->OnObjectFirstInteraction(this);
 			firstInteraction = false;
@@ -56,7 +56,7 @@ void AInteractable::CompleteObject(APlayableCharacter* playerCharacter)
 
 void AInteractable::UnlockObject(APlayableCharacter* playerCharacter, UStaticMeshComponent* component)
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 7; i++)
 	{
 		if (playerCharacter->inventory->inventoryList[i] != NULL)
 		{
@@ -70,7 +70,7 @@ void AInteractable::UnlockObject(APlayableCharacter* playerCharacter, UStaticMes
 				break;
 			}
 		}
-		else if (i == 4)
+		else if (i == 6)
 		{
 			playerCharacter->OnObjectFirstInteraction(this);
 			OpenAndClose(component);
@@ -108,6 +108,7 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 	{
 		playerCharacter->SafeInspectableObject(this);
 		playerCharacter->OnInspect();
+		OnInspected();
 	}
 
 	
