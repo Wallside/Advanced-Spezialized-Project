@@ -50,3 +50,8 @@ void AStory_GameMode::TriggerLoadGame()
 	LoadGame();
 }
 
+void AStory_GameMode::TriggerAdjustVolume()
+{
+	AdjustVolume();
+}
+

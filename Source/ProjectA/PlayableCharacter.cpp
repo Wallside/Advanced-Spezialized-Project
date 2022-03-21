@@ -410,3 +410,8 @@ void APlayableCharacter::CreateItemToAddToInventory(FString itemName, UTexture2D
 	}
 }
 
+void APlayableCharacter::TriggerAdjustVolume()
+{
+	AdjustVolume();
+}
+
