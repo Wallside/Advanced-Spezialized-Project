@@ -169,6 +169,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "System")
 	void CreateItemToAddToInventory(FString itemName, UTexture2D* itemIcon);
 
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerAdjustVolume();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void AdjustVolume();
+
 
 	
 
