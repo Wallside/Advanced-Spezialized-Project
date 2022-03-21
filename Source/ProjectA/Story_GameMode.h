@@ -48,6 +48,9 @@ public:
 	float musicVolume{1};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "System")
+	float voiceVolume{1};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "System")
 	float sfxVolume{1};
 
 	UFUNCTION(BlueprintCallable, Category = "Monster/Comabt")
@@ -85,6 +88,12 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "System")
 	void LoadGame();
+
+	UFUNCTION(BlueprintCallable, Category = "System")
+	void TriggerAdjustVolume();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "System")
+	void AdjustVolume();
 
 
 
