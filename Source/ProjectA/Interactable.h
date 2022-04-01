@@ -11,7 +11,7 @@
 UENUM()
 enum ObjectType
 {
-	Collectable, Defendable, CanBeOpened, Inspectable, None
+	Collectable, Defendable, CanBeOpened, Inspectable, None, Miniture
 };
 
 
@@ -107,6 +107,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
 	void OnInspected();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Audio/FMOD")
+	void OnMinitureCollected();
 
 	/*
 		0 = Drawer, 1 = Writing Desk, 2 = RezeptionX, 3 = RezeptionY

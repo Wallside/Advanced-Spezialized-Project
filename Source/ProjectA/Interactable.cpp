@@ -109,6 +109,10 @@ void AInteractable::Interact(APlayableCharacter* playerCharacter, UStaticMeshCom
 		playerCharacter->OnInspect();
 		OnInspected();
 	}
+	else if (objectType == Miniture)
+	{
+		OnMinitureCollected();
+	}
 
 	
 }
